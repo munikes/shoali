@@ -1,3 +1,4 @@
 # Eclipse local files
 .project
 .pydevproject
+shoali_django/*pyc
