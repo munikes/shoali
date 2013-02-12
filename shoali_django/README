@@ -1,0 +1,60 @@
+#    Description program (TODO)
+#
+#    Copyright (C) 2013 Diego Pardilla Mata
+#
+#    This file is part of Shoali.
+#
+#    Shoali is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU Affero General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU Affero General Public License for more details.
+#
+#    You should have received a copy of the GNU Affero General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+This is the shoali django web application (TODO).
+
+It has (among others) the following major features
+
+  XXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+Installation:
+
+  See INSTALL file for information on how to install shoali
+
+Starting shoali:
+
+  XXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+More information:
+
+  http://www.shoali.org (web TODO)
+  http://notebook.papersize.org (blog)
+  http://wiki.shoali.org (wiki TODO)
+
+Written by:
+
+  see AUTHORS for more information
+
+Reporting Bugs:
+
+  Please report bugs to our mailing list or our bugtracker:
+
+    munikes@member.fsf.org
+    pardilla@member.fsf.org
+    http://bug.shoali.org
+    
+Development XXXXXXXXXXX:
+    
+Contacting us:
+
+  http://packages.python.org/shoali (homepage TODO)
+  https://gitorious.org/shoali (Git Repository)
+  munikes@member.fsf.org (mUniKeS)
+  pardilla@member.fsf.org (Diego Pardilla)
