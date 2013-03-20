@@ -1,4 +1,5 @@
-#    Description program (TODO)
+#    Software as a service (SaaS), which allows anyone to manage their money,
+#    in the virtual world, transparently, without intermediaries.
 #
 #    Copyright (C) 2013 Diego Pardilla Mata
 #
@@ -18,13 +19,14 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-Install
+Install (TODO)
 
 =======
 
 XXXXXXXXXXXXX
+http://packages.python.org/shoali (package python TODO)
 
-Uninstall
+Uninstall (TODO)
 
 =========
 

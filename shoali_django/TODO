@@ -1,4 +1,5 @@
-#    Description program (TODO)
+#    Software as a service (SaaS), which allows anyone to manage their money,  
+#    in the virtual world, transparently, without intermediaries. 
 #
 #    Copyright (C) 2013 Diego Pardilla Mata
 #
@@ -22,13 +23,15 @@ TODO file for Shoali
 
 Some of the planned features include:
 
-- Description program at the start of all the files.
+-̶ ̶D̶e̶s̶c̶r̶i̶p̶t̶i̶o̶n̶ ̶p̶r̶o̶g̶r̶a̶m̶ ̶a̶t̶ ̶t̶h̶e̶ ̶s̶t̶a̶r̶t̶ ̶o̶f̶ ̶a̶l̶l̶ ̶t̶h̶e̶ ̶f̶i̶l̶e̶s̶
 - Web
 - Wiki
 - PyPi package
-- Description program in README file
-- Development description to README, gitorius
+-̶ ̶D̶e̶s̶c̶r̶i̶p̶t̶i̶o̶n̶ ̶p̶r̶o̶g̶r̶a̶m̶ ̶i̶n̶ ̶R̶E̶A̶D̶M̶E̶ ̶f̶i̶l̶e̶
+-̶ ̶D̶e̶v̶e̶l̶o̶p̶m̶e̶n̶t̶ ̶d̶e̶s̶c̶r̶i̶p̶t̶i̶o̶n̶ ̶t̶o̶ ̶R̶E̶A̶D̶M̶E̶,̶ ̶g̶i̶t̶o̶r̶i̶u̶s̶
+- Starting Shoali README file
 - INSTALL file
 -̶ ̶P̶u̶t̶ ̶p̶r̶o̶j̶e̶c̶t̶ ̶w̶i̶t̶h̶ ̶G̶i̶t̶F̶l̶o̶w̶
 - Edit Wiki (Gitorius)
 - More information FSF directory
+- More information P2P Foundation

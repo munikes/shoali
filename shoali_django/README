@@ -1,4 +1,5 @@
-#    Description program (TODO)
+#    Software as a service (SaaS), which allows anyone to manage their money,
+#    in the virtual world, transparently, without intermediaries.
 #
 #    Copyright (C) 2013 Diego Pardilla Mata
 #
@@ -18,11 +19,15 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-This is the shoali django web application (TODO).
+Shoali is a software as a service (SaaS) do it with Django framework, which 
+allows anyone to manage their money, in the virtual world, transparently, 
+without intermediaries.
 
 It has (among others) the following major features
 
-  XXXXXXXXXXXXXXXXXXXXXXXXXXX
+  * Lend money to anyone you want and how you want, without intermediaries.
+  * Borrow money to anyone you want and how you want, without intermediaries.
+  * Allows you to manage, in the virtual world, your money transparently.
 
 Installation:
 
@@ -30,12 +35,13 @@ Installation:
 
 Starting shoali:
 
-  XXXXXXXXXXXXXXXXXXXXXXXXXXX
+  XXXXXXXXXXXXXXXXXXXXXXXXXXX (TODO)
 
 More information:
 
-  http://www.shoali.org (web TODO)
-  http://notebook.papersize.org (blog)
+  http://www.shoali.org (web & homepage TODO)
+  http://notebook.papersize.org (blog, it's possible that in the future change 
+  to the domain shoali.org, with the URL: blog.shoali.org)
   http://wiki.shoali.org (wiki TODO)
 
 Written by:
@@ -46,15 +52,25 @@ Reporting Bugs:
 
   Please report bugs to our mailing list or our bugtracker:
 
-    munikes@member.fsf.org
-    pardilla@member.fsf.org
-    http://bug.shoali.org
+    dev@shoali.org (Developers mailing list)
+    http://bug.shoali.org (Bugtracker)
     
-Development XXXXXXXXXXX:
+Development:
+
+  If you just want to develop code, you can clone Shoali of Gitorious 
+  repository, as follows:
+
+    user@machine:~>git clone git://gitorious.org/shoali/shoali.git shoali
+
+  For more information:
+
+    https://gitorious.org/shoali (Git Repository)
+    dev@shoali.org (Developers mailing list)
+    admin@shoali.org (Administrator)
     
 Contacting us:
 
-  http://packages.python.org/shoali (homepage TODO)
-  https://gitorious.org/shoali (Git Repository)
+  users@shoali.org (Users mailing list)
+  munikes@shoali.org (mUniKeS)
   munikes@member.fsf.org (mUniKeS)
-  pardilla@member.fsf.org (Diego Pardilla)
+  pardilla@member.fsf.org (Diego Pardilla Mata)
