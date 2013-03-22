@@ -16,11 +16,11 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'shoali',                      # Or path to database file if using sqlite3.
-        'USER': 'shoali',                      # Not used with sqlite3.
-        'PASSWORD': 'shoali321',                  # Not used with sqlite3.
-        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+        'NAME': 'shoali',          # Or path to database file if using sqlite3.
+        'USER': 'shoali',          # Not used with sqlite3.
+        'PASSWORD': 'shoali321',   # Not used with sqlite3.
+        'HOST': '',                # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '',                # Set to empty string for default. Not used with sqlite3.
     }
 }
 
@@ -32,7 +32,7 @@ TIME_ZONE = 'Europe/Madrid'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
-LANGUAGE_CODE = 'es-es'
+LANGUAGE_CODE = 'es-ES'
 
 SITE_ID = 1
 
@@ -101,10 +101,10 @@ MIDDLEWARE_CLASSES = (
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'shoali.urls'
+ROOT_URLCONF = 'main.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
-WSGI_APPLICATION = 'shoali.wsgi.application'
+WSGI_APPLICATION = 'main.wsgi.application'
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
@@ -124,7 +124,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
-    'web_app',
+    'main.apps.core',
 )
 
 # A sample logging configuration. The only tangible logging
