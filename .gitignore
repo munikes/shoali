@@ -3,3 +3,5 @@
 .pydevproject
 # Python binary files
 *pyc
+# Vim swap files
+*swp
