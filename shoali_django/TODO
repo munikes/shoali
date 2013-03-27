@@ -36,3 +36,5 @@ Some of the planned features include:
 - More information FSF directory
 - More information P2P Foundation
 - Translate howto (django.es/blog/editar-y-traducir-inline-en-django-facilmente)
+- Install API Python-BitcoinRPC
+- Queries bitcoin address
