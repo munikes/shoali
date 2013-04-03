@@ -1,4 +1,5 @@
-#    Description program (TODO)
+#    Software as a service (SaaS), which allows anyone to manage their money,
+#    in the virtual world, transparently, without intermediaries.
 #
 #    Copyright (C) 2013 Diego Pardilla Mata
 #
@@ -17,20 +18,23 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from django.db import models
 
-from django.conf.urls import patterns, include, url
 
-# Uncomment the next two lines to enable the admin:
-from django.contrib import admin
-admin.autodiscover()
+class User (models.Model):
+    nick = models.CharField(max_length = 10, verbose_name = 'Nick', unique=True)
+    email = models.EmailField(verbose_name = 'e-mail')
 
-urlpatterns = patterns('',
-    # Examples:
-    url(r'^test/$','main.apps.core.views.userbitcoin', name='test'),
+    def __unicode__(self):
+        return self.nick
 
-    # Uncomment the admin/doc line below to enable admin documentation:
-    url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
-    # Uncomment the next line to enable the admin:
-    url(r'^admin/', include(admin.site.urls)),
-)
+class BitcoinAddress (models.Model):
+    user = models.ForeignKey(User)
+    bitcoin_address = models.CharField (max_length = 34, unique = True, 
+            verbose_name = 'Bitcoin Address', 
+            help_text = 'the bitcoin address (length 27-34)', blank=True)
+
+    def __unicode__(self):
+        return self.bitcoin_address
+
