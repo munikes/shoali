@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div id="query">
+    <form  id="form" action="/balance/" method="post">
+        {% csrf_token %}
+        {{ form_url.as_p }}
+        {{ form_btc.as_p }}
+        {% if balance %}
+        Balance: <font color="#00ffff">{{ balance }}</font> BTC.<br/>
+        {% else %}
+        Balance: <font color="#00ffff">0</font> BTC.<br/>
+        {% endif %}
+        <button type="submit" class="btn">Get Balance</button>
+    </form>
+</div>
+{% endblock %}

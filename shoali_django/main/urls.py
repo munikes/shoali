@@ -1,4 +1,5 @@
-#    Description program (TODO)
+#    Software as a service (SaaS), which allows anyone to manage their money,
+#    in the virtual world, transparently, without intermediaries.
 #
 #    Copyright (C) 2013 Diego Pardilla Mata
 #
@@ -26,11 +27,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     # Examples:
-    # url(r'^$', 'shoali.views.home', name='home'),
-    # url(r'^shoali/', include('shoali.foo.urls')),
-    url(r'^login/$','web_app.views.login', name='login'),
-    url(r'^new_user/$','web_app.views.new_user', name='new_user'),
-    url(r'^main/$','web_app.views.main', name='main'),
+    url(r'^balance/$','main.apps.core.views.getbalance', name='balance'),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
