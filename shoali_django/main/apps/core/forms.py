@@ -24,7 +24,6 @@ from django.forms import ModelForm
 from main.apps.core.models import User, BitcoinAddress
 
 
-
 class UserForm (ModelForm):
     class Meta:
         model = User
@@ -33,6 +32,10 @@ class UserForm (ModelForm):
 class BitcoinAddressForm (ModelForm):
     bitcoin_address = forms.CharField(max_length = 34, min_length = 27)
 
+    class Meta:
+        model = BitcoinAddress
+        fields = {'bitcoin_address',}
+
     def clean(self):
         """
         Check that the bitcoin address starts with one or three.
@@ -40,11 +43,6 @@ class BitcoinAddressForm (ModelForm):
         # get bitcoin address from form
         bitcoin_address =  self.cleaned_data.get('bitcoin_address')
         if bitcoin_address and bitcoin_address[0] != '1' and bitcoin_address[0] != '3':
-            raise forms.ValidationError('The first digit of a bitcoin address must be either one or three.')
-
+            raise forms.ValidationError('The first digit of a bitcoin address \
+                    must be either one or three.')
         return self.cleaned_data
-
-
-    class Meta:
-        model = BitcoinAddress
-        fields = {'bitcoin_address',}

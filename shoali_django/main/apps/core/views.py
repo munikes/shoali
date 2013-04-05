@@ -23,8 +23,11 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 
 def userbitcoin (request):
+    # init forms
+    form_user = UserForm ()
+    form_btc = BitcoinAddressForm ()
     if request.method == 'POST':
-        # get form
+        # get forms
         form_user = UserForm(request.POST)
         form_btc = BitcoinAddressForm(request.POST)
         if form_user.is_valid () and form_btc.is_valid():
@@ -37,14 +40,5 @@ def userbitcoin (request):
             bitcoin_address.user = user
             # insert bitcoin address in database
             bitcoin_address.save()
-            return render_to_response('test.html', {'form_user': form_user, 
+    return render_to_response('test.html', {'form_user': form_user, 
                 'form_btc': form_btc}, context_instance = RequestContext(request))
-        else:
-            return render_to_response('test.html', {'form_user': form_user, 
-                'form_btc': form_btc}, context_instance = RequestContext(request))
-
-    else:
-        form_user = UserForm ()
-        form_btc = BitcoinAddressForm ()
-        return render_to_response('test.html', {'form_user': form_user, 
-            'form_btc': form_btc}, context_instance = RequestContext(request))
