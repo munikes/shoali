@@ -1,4 +1,5 @@
-#    Description program (TODO)
+#    Software as a service (SaaS), which allows anyone to manage their money,
+#    in the virtual world, transparently, without intermediaries.
 #
 #    Copyright (C) 2013 Diego Pardilla Mata
 #
