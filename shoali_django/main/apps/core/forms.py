@@ -27,6 +27,10 @@ from main.apps.core.models import BitcoinAddress
 class BitcoinAddressForm (ModelForm):
     bitcoin_address = forms.CharField(max_length = 34, min_length = 27)
 
+    class Meta:
+        model = BitcoinAddress
+        fields = {'bitcoin_address',}
+
     def clean(self):
         """
         Check that the bitcoin address starts with one or three.
@@ -36,13 +40,7 @@ class BitcoinAddressForm (ModelForm):
         if bitcoin_address and bitcoin_address[0] != '1' and bitcoin_address[0] != '3':
             raise forms.ValidationError('The first digit of a bitcoin address \
                     must be either one or three.')
-
         return self.cleaned_data
-
-
-    class Meta:
-        model = BitcoinAddress
-        fields = {'bitcoin_address',}
 
 
 class RPCConnectForm (forms.Form):

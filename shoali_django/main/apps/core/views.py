@@ -26,10 +26,14 @@ import socket
 
 
 def getbalance (request):
+    # insert in a config file
     user_RPC = 'user'
     passwd_RPC = 'password'
+    # init forms
+    form_url = RPCConnectForm()
+    form_btc = BitcoinAddressForm()
     if request.method == 'POST':
-        # get form
+        # get forms
         form_url = RPCConnectForm (request.POST)
         form_btc = BitcoinAddressForm (request.POST)
         if form_url.is_valid() and form_btc.is_valid():
@@ -38,14 +42,6 @@ def getbalance (request):
                 form_url.cleaned_data['port']))
             account = con.getaccount(form_btc.cleaned_data['bitcoin_address'])
             balance = con.getbalance(account)
-            return render_to_response ('query.html', {'balance':balance}, 
-                    context_instance = RequestContext(request))
-        else:
-            return render_to_response ('query.html', {'form_url': form_url, 
-                'form_btc': form_btc}, context_instance = RequestContext(request))
-    else:
-        form_url = RPCConnectForm()
-        form_btc = BitcoinAddressForm()
-        return render_to_response('query.html', {'form_url': form_url, 
-            'form_btc': form_btc}, context_instance = RequestContext(request))
-
+    return render_to_response ('query.html', {'form_url': form_url, 
+        'form_btc': form_btc, 'balance':balance}, 
+        context_instance = RequestContext(request))
