@@ -40,3 +40,4 @@ Some of the planned features include:
 - Queries bitcoin address
 - Index all bitcoin address with rescan transactions (bitcoin-abe, bitsofproof), MongoDB
 - Change description Gitorius
+- Password encrypt in models.py
