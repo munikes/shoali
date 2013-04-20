@@ -36,8 +36,10 @@ Some of the planned features include:
 - More information FSF directory
 - More information P2P Foundation
 - Translate howto (django.es/blog/editar-y-traducir-inline-en-django-facilmente)
-- Install API Python-BitcoinRPC
-- Queries bitcoin address
+-̶ ̶I̶n̶s̶t̶a̶l̶l̶ ̶A̶P̶I̶ ̶P̶y̶t̶h̶o̶n̶-̶B̶i̶t̶c̶o̶i̶n̶R̶P̶C̶
+-̶ ̶Q̶u̶e̶r̶i̶e̶s̶ ̶b̶i̶t̶c̶o̶i̶n̶ ̶a̶d̶d̶r̶e̶s̶s̶
 - Index all bitcoin address with rescan transactions (bitcoin-abe, bitsofproof), MongoDB
 - Change description Gitorius
 - Password encrypt in models.py
+- Validate Bitcoin Address (https://bitcointalk.org/index.php?topic=1026.0)
+- JSON wallet format (https://blockchain.info/wallet/wallet-format)
