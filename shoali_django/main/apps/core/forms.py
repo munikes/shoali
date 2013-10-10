@@ -21,26 +21,26 @@
 
 from django.forms import ModelForm
 from django import forms
-from main.apps.core.models import BitcoinAddress
+#from main.apps.core.models import BitcoinAddress
 
 
 class BitcoinAddressForm (ModelForm):
     bitcoin_address = forms.CharField(max_length = 34, min_length = 27)
 
-    class Meta:
-        model = BitcoinAddress
-        fields = {'bitcoin_address',}
+#    class Meta:
+#        model = BitcoinAddress
+#        fields = {'bitcoin_address',}
 
-    def clean(self):
-        """
-        Check that the bitcoin address starts with one or three.
-        """
-        # get bitcoin address from form
-        bitcoin_address =  self.cleaned_data.get('bitcoin_address')
-        if bitcoin_address and bitcoin_address[0] != '1' and bitcoin_address[0] != '3':
-            raise forms.ValidationError('The first digit of a bitcoin address \
-                    must be either one or three.')
-        return self.cleaned_data
+#    def clean(self):
+#        """
+#        Check that the bitcoin address starts with one or three.
+#        """
+#        # get bitcoin address from form
+#        bitcoin_address =  self.cleaned_data.get('bitcoin_address')
+#        if bitcoin_address and bitcoin_address[0] != '1' and bitcoin_address[0] != '3':
+#            raise forms.ValidationError('The first digit of a bitcoin address \
+#                    must be either one or three.')
+#        return self.cleaned_data
 
 
 class RPCConnectForm (forms.Form):
