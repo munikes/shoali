@@ -24,7 +24,8 @@ from django import forms
 #from main.apps.core.models import BitcoinAddress
 
 
-class BitcoinAddressForm (ModelForm):
+#class BitcoinAddressForm (ModelForm):
+class BitcoinAddressForm (forms.Form):
     bitcoin_address = forms.CharField(max_length = 34, min_length = 27)
 
 #    class Meta:
