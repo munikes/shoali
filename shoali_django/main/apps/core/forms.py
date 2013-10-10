@@ -19,30 +19,31 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from django import forms
 from django.forms import ModelForm
-from main.apps.core.models import User, BitcoinAddress
+from django import forms
+#from main.apps.core.models import BitcoinAddress
 
 
-class UserForm (ModelForm):
-    class Meta:
-        model = User
-
-
-class BitcoinAddressForm (ModelForm):
+#class BitcoinAddressForm (ModelForm):
+class BitcoinAddressForm (forms.Form):
     bitcoin_address = forms.CharField(max_length = 34, min_length = 27)
 
-    class Meta:
-        model = BitcoinAddress
-        fields = {'bitcoin_address',}
+#    class Meta:
+#        model = BitcoinAddress
+#        fields = {'bitcoin_address',}
 
-    def clean(self):
-        """
-        Check that the bitcoin address starts with one or three.
-        """
-        # get bitcoin address from form
-        bitcoin_address =  self.cleaned_data.get('bitcoin_address')
-        if bitcoin_address and bitcoin_address[0] != '1' and bitcoin_address[0] != '3':
-            raise forms.ValidationError('The first digit of a bitcoin address \
-                    must be either one or three.')
-        return self.cleaned_data
+#    def clean(self):
+#        """
+#        Check that the bitcoin address starts with one or three.
+#        """
+#        # get bitcoin address from form
+#        bitcoin_address =  self.cleaned_data.get('bitcoin_address')
+#        if bitcoin_address and bitcoin_address[0] != '1' and bitcoin_address[0] != '3':
+#            raise forms.ValidationError('The first digit of a bitcoin address \
+#                    must be either one or three.')
+#        return self.cleaned_data
+
+
+class RPCConnectForm (forms.Form):
+    host = forms.CharField(label='Host or IP address')
+    port = forms.IntegerField(min_value = 1024, max_value = 65535, initial = 8332)

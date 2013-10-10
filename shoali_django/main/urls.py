@@ -27,7 +27,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     # Examples:
-    url(r'^test/$','main.apps.core.views.userbitcoin', name='test'),
+    url(r'^balance/$','main.apps.core.views.getbalance', name='balance'),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),

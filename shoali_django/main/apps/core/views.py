@@ -1,3 +1,6 @@
+#    This Python file uses the following encoding: utf-8 .
+#    See http://www.python.org/peps/pep-0263.html for details
+
 #    Software as a service (SaaS), which allows anyone to manage their money,
 #    in the virtual world, transparently, without intermediaries.
 #
@@ -18,27 +21,40 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from main.apps.core.forms import UserForm, BitcoinAddressForm
+from main.apps.core.forms import BitcoinAddressForm
+from main.apps.core.utils import get_blocks, sum_balance
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+import bitcoinrpc
 
-def userbitcoin (request):
-    # init forms
-    form_user = UserForm ()
-    form_btc = BitcoinAddressForm ()
+
+def getbalance (request):
+    """
+    Get balance of a bitcoin address
+    """
+    # insert in a config file
+    BTC_USER_RPC='mUniKeS'
+    BTC_PASSWORD_RPC='Ft4MEhiXsasyyDPr26eGgQwLtqD6AcPJNz6nU8o1r9Fn'
+    BTC_HOST_RPC='agora-2'
+    BTC_PORT_RPC=8332
+    BTC_HTTPS_RPC=False
+    # init variables
+    balance = 0
+    form_btc = BitcoinAddressForm()
     if request.method == 'POST':
         # get forms
-        form_user = UserForm(request.POST)
-        form_btc = BitcoinAddressForm(request.POST)
-        if form_user.is_valid () and form_btc.is_valid():
-            # insert user in database
-            user = form_user.save()
-            # save form bitcoin_address but don't insert in database until get 
-            # the foreign key
-            bitcoin_address = form_btc.save(commit=False)
-            # insert user foreign key in bitcoin table
-            bitcoin_address.user = user
-            # insert bitcoin address in database
-            bitcoin_address.save()
-    return render_to_response('test.html', {'form_user': form_user, 
-                'form_btc': form_btc}, context_instance = RequestContext(request))
+        form_btc = BitcoinAddressForm (request.POST)
+        if form_btc.is_valid():
+            # connect to bitcoin client
+            con_btc = bitcoinrpc.connect_to_remote(BTC_USER_RPC, BTC_PASSWORD_RPC,
+                    host=BTC_HOST_RPC, port=BTC_PORT_RPC,use_https=BTC_HTTPS_RPC)
+            # get the total number of blocks in this moment
+            #first_block = 0
+            #number_blocks = con_btc.getblockcount()
+            first_block = 225990
+            number_blocks = 225990
+            bitcoin_entry = get_blocks(con_btc,
+                    request.POST.get('bitcoin_address'),first_block,number_blocks)
+            balance = sum_balance(con_btc, bitcoin_entry)
+    return render_to_response ('query.html', {'form_btc': form_btc,
+        'balance':balance}, context_instance = RequestContext(request))
