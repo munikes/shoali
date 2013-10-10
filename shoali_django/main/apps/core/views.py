@@ -1,3 +1,6 @@
+#    This Python file uses the following encoding: utf-8 .
+#    See http://www.python.org/peps/pep-0263.html for details
+
 #    Software as a service (SaaS), which allows anyone to manage their money,
 #    in the virtual world, transparently, without intermediaries.
 #
@@ -18,30 +21,40 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from main.apps.core.forms import BitcoinAddressForm, RPCConnectForm
+from main.apps.core.forms import BitcoinAddressForm
+from main.apps.core.utils import get_blocks, sum_balance
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from bitcoinrpc.authproxy import AuthServiceProxy as ServiceProxy
-import socket
+import bitcoinrpc
 
 
 def getbalance (request):
+    """
+    Get balance of a bitcoin address
+    """
     # insert in a config file
-    user_RPC = 'user'
-    passwd_RPC = 'password'
-    # init forms
-    form_url = RPCConnectForm()
+    BTC_USER_RPC='mUniKeS'
+    BTC_PASSWORD_RPC=''
+    BTC_HOST_RPC='agora-2'
+    BTC_PORT_RPC=8332
+    BTC_HTTPS_RPC=False
+    # init variables
+    balance = 0
     form_btc = BitcoinAddressForm()
     if request.method == 'POST':
         # get forms
-        form_url = RPCConnectForm (request.POST)
         form_btc = BitcoinAddressForm (request.POST)
-        if form_url.is_valid() and form_btc.is_valid():
-            con = ServiceProxy ('http://%s:%s@%s:%d' % (user_RPC, passwd_RPC, 
-                socket.gethostbyname(form_url.cleaned_data['host']), 
-                form_url.cleaned_data['port']))
-            account = con.getaccount(form_btc.cleaned_data['bitcoin_address'])
-            balance = con.getbalance(account)
-    return render_to_response ('query.html', {'form_url': form_url, 
-        'form_btc': form_btc, 'balance':balance}, 
-        context_instance = RequestContext(request))
+        if form_btc.is_valid():
+            # connect to bitcoin client
+            con_btc = bitcoinrpc.connect_to_remote(BTC_USER_RPC, BTC_PASSWORD_RPC,
+                    host=BTC_HOST_RPC, port=BTC_PORT_RPC,use_https=BTC_HTTPS_RPC)
+            # get the total number of blocks in this moment
+            first_block = 0
+            number_blocks = con_btc.getblockcount()
+            #first_block = 225990
+            #number_blocks = 225990
+            bitcoin_entry = get_blocks(con_btc,
+                    request.POST.get('bitcoin_address'),first_block,number_blocks)
+            balance = sum_balance(con_btc, bitcoin_entry)
+    return render_to_response ('query.html', {'form_btc': form_btc,
+        'balance':balance}, context_instance = RequestContext(request))
