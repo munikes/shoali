@@ -126,6 +126,7 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     'main.apps.core',
     'django_extensions',
+    'djcelery',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -156,3 +157,24 @@ LOGGING = {
         },
     }
 }
+
+# Celery config
+import djcelery
+djcelery.setup_loader()
+BROKER_URL = 'mongodb://localhost/celery'
+
+CELERY_RESULT_BACKEND = 'mongodb'
+CELERY_MONGODB_BACKEND_SETTINGS = {
+                'host': BROKER_URL,
+                        'taskmeta_collection': 'shoali_taskmeta' # Collection name to use for task output
+                        }
+#BROKER_BACKEND = 'mongodb'
+#BROKER_HOST = 'localhost'
+#BROKER_PORT = 27017
+#BROKER_USER = ''
+#BROKER_PASSWORD = ''
+#BROKER_VHOST = 'celery'
+
+# Find and register all celery tasks.  Your tasks need to be in a
+# tasks.py file to be picked up.
+CELERY_IMPORTS = ('main.apps.core.tasks', )
