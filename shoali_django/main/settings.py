@@ -165,9 +165,9 @@ BROKER_URL = 'mongodb://localhost/celery'
 
 CELERY_RESULT_BACKEND = 'mongodb'
 CELERY_MONGODB_BACKEND_SETTINGS = {
-                'host': BROKER_URL,
-                        'taskmeta_collection': 'shoali_taskmeta' # Collection name to use for task output
-                        }
+    'host': BROKER_URL,
+    'taskmeta_collection': 'shoali_taskmeta' # Collection name to use for task output
+}
 #BROKER_BACKEND = 'mongodb'
 #BROKER_HOST = 'localhost'
 #BROKER_PORT = 27017

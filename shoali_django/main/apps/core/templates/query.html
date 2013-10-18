@@ -1,16 +1,13 @@
-{% extends "base.html" %}
-
+{% extends "javascript.html" %}
 {% block content %}
 <div id="query">
-    <form  id="form" action="/balance/" method="post">
+    <form  id="balance-form" action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form_btc.as_p }}
-        {% if balance %}
-        Balance: <font color="#00ffff">{{ balance }}</font> BTC.<br/>
-        {% else %}
-        Balance: <font color="#00ffff">0</font> BTC.<br/>
-        {% endif %}
-        <button type="submit" class="btn">Get Balance</button>
+        Balance: <font color="#00ffff" id="balance">0</font> BTC.<br/>
+        <input type="hidden" name="task" id="task_id" value=""/>
+        <button type="submit">Get Balance</button>
+        <div id="progress-bar"><div class="progress-label"></div></div>
     </form>
 </div>
 {% endblock %}

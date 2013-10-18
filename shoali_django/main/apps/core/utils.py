@@ -170,3 +170,44 @@ def sum_balance(connection, bitcoin_entry):
             break
     logging.info('Total balance: %s', balance)
     return balance
+
+def get_block(connection, bitcoin_address, number_block):
+    """
+    Give a bitcoin address, connection to bitcoin client, a number of block,
+    and returns if this block is involved with this bitcoin address
+    """
+    # get block info
+    while True:
+        try:
+            block = connection.getblock(connection.getblockhash(number_block))
+        except socket.timeout:
+            continue
+        except Exception as e:
+            logging.exception(e)
+            raise Exception (e)
+        break
+    # get block transacctions
+    for j in block.get('tx'):
+        logging.debug('tx: %s', j)
+        while True:
+            try:
+                tx = connection.getrawtransaction(j)
+            except socket.timeout:
+                continue
+            except Exception as e:
+                logging.exception(e)
+                raise Exception (e)
+            break
+        for k in range(0, len(tx.vout)):
+            for l in tx.vout[k].get('scriptPubKey').get('addresses'):
+                logging.debug('btc_addr: %s', l)
+                if l == bitcoin_address:
+                    return True
+                    break
+            else:
+                continue
+            break
+        else:
+            continue
+        break
+        return False
