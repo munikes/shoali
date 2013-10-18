@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% block javascript %}
+    <link rel="stylesheet" href="{{STATIC_URL}}css/ui-lightness/jquery-ui-1.10.3.custom.css" />
+    <link rel="stylesheet" href="{{STATIC_URL}}css/ui-lightness/jquery-ui-1.10.3.custom.min.css" />
+    <script type="text/javascript" src="{{STATIC_URL}}js/jquery-1.10.2.min.js">
+    </script>
+    <script type="text/javascript" src="{{STATIC_URL}}js/jquery.form.min.js">
+    </script>
+    <script type="text/javascript" src="{{STATIC_URL}}js/jquery-ui-1.10.3.custom.min.js">
+    </script>
+<style>
+.ui-progressbar {
+position: relative;
+}
+.progress-label {
+position: absolute;
+left: 50%;
+top: 4px;
+font-weight: bold;
+text-shadow: 1px 1px 0 #fff;
+}
+</style>
+    <script>
+    // pre-submit callback
+    function beforeSubmitHandler(formData, jqForm, options) {
+        $("#progress-bar").progressbar({
+            value: false,
+            create: function() {
+                $('.progress-label').text( "Loading..." );
+            },
+            change: function() {
+                if ($('#progress-bar').progressbar( "value" ) != false) {
+                    $('.progress-label').text( $('#progress-bar').progressbar( "value" ) + "%" );
+                } else {
+                    $('.progress-label').text( "Loading..." );
+                }
+            },
+            complete: function() {
+                $('.progress-label').text( "Complete!" );
+            }
+        });
+
+        return true;
+    };
+
+    // post-submit callback
+    function updater(response, success){
+        $('#task_id').val(response);
+        $.ajax({
+            dataType: 'json',
+            type: 'POST',
+            url: '/update_task/',
+            data: {csrfmiddlewaretoken: '{{ csrf_token }}',
+                task: $('#task_id').val()},
+            success: function(response){
+                if (response.state == 'PROGRESS'){
+                    var first = response.result['first'];
+                    var last = response.result['last'];
+                    var current = response.result['current'];
+                    var value = ((current - first) * 100) / (last - first);
+                    // Wait for the SUCCESS task, wait in 99%
+                    if (value == 100) { value = value - 1; }
+                    $('#progress-bar').progressbar( "value", Math.round(value));
+                } else if (response.state == 'SUCCESS'){
+                    clearInterval(interval);
+                    $('#progress-bar').progressbar( "value", 100 );
+                    $('#balance').text(response.result);
+                }
+            },
+            error : function(xhr,errmsg,err) {
+                $('#progress-bar').progressbar( "destroy" );
+                clearInterval(interval);
+                alert('ERROR upload:' + xhr.status + ": " + xhr.responseText);
+            },
+        });
+    };
+
+    // on page load
+    $(document).ready(function() {
+        var options = {
+            dataType: 'json',
+            type: 'POST',
+            url: '/balance/',
+            beforeSubmit: beforeSubmitHandler,
+            success: function (response){
+                interval = setInterval(function(){ updater(response) } , 5000);
+            },
+            error : function(xhr,errmsg,err) {
+                alert('ERROR updater:' + xhr.status + ": " + xhr.responseText);
+            },
+        };
+        $('#balance-form').ajaxForm(options);
+    });
+    </script>
+{% endblock %}
