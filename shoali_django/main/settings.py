@@ -128,6 +128,7 @@ INSTALLED_APPS = (
     'django_extensions',
     'djcelery',
     'registration',
+    'captcha',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -197,6 +198,12 @@ ACCOUNT_ACTIVATION_DAYS = 7
 
 # Storing additional information about users
 AUTH_PROFILE_MODULE = 'core.ShoaliUser'
+
+# Captcha - google.com/recaptcha
+RECAPTCHA_PUBLIC_KEY = '6LctfuASAAAAAKW8o1uZbOzwVP2IQ6PAKTsvhOlp'
+RECAPTCHA_PRIVATE_KEY = '6LctfuASAAAAAF3Kk5VugTSy1zJbWlSiAl8KSNsB'
+RECAPTCHA_USE_SSL = True
+RECAPTCHA_TESTING = True
 
 # Celery config
 import djcelery
