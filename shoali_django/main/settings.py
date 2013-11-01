@@ -127,6 +127,7 @@ INSTALLED_APPS = (
     'main.apps.core',
     'django_extensions',
     'djcelery',
+    'registration',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -186,6 +187,16 @@ LOGGING = {
         }
     }
 }
+
+LOGIN_REDIRECT_URL = '/user/'
+# This is the number of days users will have to activate their accounts after$
+# registering. If a user does not activate within that period, the account will
+# remain permanently inactive and may be deleted by maintenance scripts
+# provided in django-registration.
+ACCOUNT_ACTIVATION_DAYS = 7
+
+# Storing additional information about users
+AUTH_PROFILE_MODULE = 'core.ShoaliUser'
 
 # Celery config
 import djcelery
