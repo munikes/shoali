@@ -205,6 +205,14 @@ RECAPTCHA_PRIVATE_KEY = '6LePlukSAAAAAKCT9IjIzMGr60hQx3eJisBkfORE'
 RECAPTCHA_USE_SSL = True
 RECAPTCHA_TESTING = True
 
+# SMTP mail server
+EMAIL_HOST='mail.shoali.org'
+EMAIL_PORT=25
+EMAIL_HOST_USER='admin@shoali.org'
+EMAIL_HOST_PASSWORD='XXXXXXX'
+EMAIL_USE_TLS=True
+DEFAULT_FROM_EMAIL = 'non-reply@shoali.org'
+
 # Celery config
 import djcelery
 djcelery.setup_loader()
