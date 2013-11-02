@@ -127,6 +127,8 @@ INSTALLED_APPS = (
     'main.apps.core',
     'django_extensions',
     'djcelery',
+    'registration',
+    'captcha',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -186,6 +188,30 @@ LOGGING = {
         }
     }
 }
+
+LOGIN_REDIRECT_URL = '/user/'
+# This is the number of days users will have to activate their accounts after$
+# registering. If a user does not activate within that period, the account will
+# remain permanently inactive and may be deleted by maintenance scripts
+# provided in django-registration.
+ACCOUNT_ACTIVATION_DAYS = 7
+
+# Storing additional information about users
+AUTH_PROFILE_MODULE = 'core.ShoaliUser'
+
+# Captcha - google.com/recaptcha
+RECAPTCHA_PUBLIC_KEY = '6LePlukSAAAAAG79GF150tQATBb5LKzYqlQL4VRH'
+RECAPTCHA_PRIVATE_KEY = '6LePlukSAAAAAKCT9IjIzMGr60hQx3eJisBkfORE'
+RECAPTCHA_USE_SSL = True
+RECAPTCHA_TESTING = True
+
+# SMTP mail server
+EMAIL_HOST='mail.shoali.org'
+EMAIL_PORT=25
+EMAIL_HOST_USER='admin@shoali.org'
+EMAIL_HOST_PASSWORD='shoali321'
+EMAIL_USE_TLS=True
+DEFAULT_FROM_EMAIL = 'non-reply@shoali.org'
 
 # Celery config
 import djcelery

@@ -20,19 +20,41 @@
 
 
 from django.conf.urls import patterns, include, url
+from django.views.generic.simple import direct_to_template
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
+from main.apps.core.backend.views import CustomRegistrationView, CustomActivationView
+from main.apps.core.forms import CustomRegistrationForm
 admin.autodiscover()
 
-urlpatterns = patterns('',
+urlpatterns = patterns('main.apps.core.views',
+    # Shoali urls:
+    url(r'^$', 'begin', name='begin'),
     # Examples:
-    url(r'^balance/$','main.apps.core.views.getbalance', name='balance'),
-    url(r'^update_task/$', 'main.apps.core.views.update_task', name='update_task'),
-
+    url(r'^balance/$','getbalance', name='balance'),
+    url(r'^update_task/$', 'update_task', name='update_task'),
+)
+urlpatterns += patterns('',
     # Uncomment the admin/doc line below to enable admin documentation:
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
+
+    # Django regitration enable:
+    url(r'^accounts/register/$', CustomRegistrationView.as_view(
+        form_class=CustomRegistrationForm),
+        name='registration_register'),
+    url(r'^accounts/activate/complete/$', direct_to_template,
+        {'template': 'registration/activation_complete.html'},
+        name='registration_activation_complete'),
+    # Activation keys get matched by \w+ instead of the more specific
+    # [a-fA-F0-9]{40} because a bad activation key should still get to the view;
+    # that way it can return a sensible "invalid key" message instead of a
+    # confusing 404.
+    url(r'^accounts/activate/(?P<activation_key>\w+)/$', 
+        CustomActivationView.as_view(),
+        name='registration_activate'),
+    url(r'^accounts/', include('registration.backends.default.urls')),
 )

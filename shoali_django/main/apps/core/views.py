@@ -21,14 +21,17 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from main.apps.core.forms import BitcoinAddressForm
-from main.apps.core.tasks import get_balance_and_progress_status
+import logging
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponse
 from django.utils import simplejson as json
-import logging
 
+from main.apps.core.forms import BitcoinAddressForm
+from main.apps.core.tasks import get_balance_and_progress_status
+
+def begin (request):
+    return render_to_response('index.html',{})
 
 def getbalance (request):
     """
