@@ -22,46 +22,70 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.db import models
+from django.contrib.auth.models import User
+from django.utils import timezone
+from registration.models import RegistrationProfile
+from registration.signals import user_registered
 
-class User (models.Model):
-    # in the future we will use the user class of Django 
-    # that is already implemented.
-    name = models.CharField(max_length = 30, verbose_name = 'Name', blank=True)
-    surname = models.CharField(max_length = 60, verbose_name = 'Surname', 
+class ShoaliUser (models.Model):
+    # Related Shoali User with Django User
+    user = models.OneToOneField(User)
+    # User (duplicated inform in user django auth module, fields (nick, name,
+    # surname, password and email))
+    nick = models.CharField(max_length=30, verbose_name='Username', unique=True)
+    password = models.CharField(max_length=128, verbose_name='Password')
+    name = models.CharField(max_length=30, verbose_name='Name', blank=True)
+    surname = models.CharField(max_length=60, verbose_name='Surname',
+                    blank=True)
+    email = models.EmailField(verbose_name='e-mail')
+    # relative directories (unique nick name)
+    def avatars_to(instance, filename):
+        """
+        Create relative path with nick and filename p.e 'avatars/nick/filename'
+        """
+        # TODO: this path in config file
+        return 'avatars/%s/%s' % (instance.nick, filename)
+    avatar = models.ImageField(upload_to=avatars_to, verbose_name='Avatar',
             blank=True)
-    nick = models.CharField(max_length = 10, verbose_name = 'Nick', unique=True)
-    email = models.EmailField(verbose_name = 'e-mail')
-    photo = models.ImageField(upload_to = 'photos', verbose_name = 'Photo', 
+    country = models.CharField(max_length=20, verbose_name='Country',
             blank=True)
-    # now is text plain (TODO)
-    password = models.CharField(max_length = 128, verbose_name = 'Password')
-    country = models.CharField(max_length = 20, verbose_name = 'Country', 
+    state = models.CharField (max_length=30, verbose_name='State',
             blank=True)
-    state = models.CharField (max_length = 30, verbose_name = 'State', 
+    city = models.CharField (max_length=30, verbose_name='City', blank=True)
+    description = models.TextField (verbose_name='Description',
+            help_text='Describe yourself and your interests in 140 characters.',
             blank=True)
-    city = models.CharField (max_length = 30, verbose_name = 'City', blank=True)
-    description = models.TextField (verbose_name = 'Description', 
-            help_text = 'Describe yourself and your interests in 140 characters.', 
-            blank=True)
-    public_key = models.CharField (max_length = 8, unique = True, 
-            verbose_name = 'GPG Public KeyID', 
-            help_text = '8 characters of you GPG Public KeyID.')
-    birthday = models.DateField(verbose_name = 'Birthday', blank=True)
-    telephone = models.PositiveIntegerField(verbose_name = 'Phone', blank=True)
+    gpg_key = models.CharField (max_length=8, unique=True,
+            verbose_name='GPG Public KeyID', null=True,
+            help_text='8 characters of you GPG Public KeyID.')
+    birthday = models.DateField(verbose_name='Birthday', null=True)
+    telephone = models.CharField(max_length=13, verbose_name='Phone', blank=True)
     GENDER = (
             ('MALE', 'Male'),
             ('FEMALE', 'Female'),
             )
-    gender = models.CharField (max_length = 6, choices = GENDER, 
-            verbose_name = 'Gender', blank=True)
-    subscribe = models.DateField (auto_now_add = True)
-    unsubscribe = models.DateField (auto_now = True)
+    gender = models.CharField (max_length=6, choices=GENDER,
+            verbose_name='Gender', blank=True)
+    is_active = models.BooleanField (default=False)
+    subscribe = models.DateTimeField (auto_now_add=True, default=timezone.now)
+    unsubscribe = models.DateTimeField (auto_now=True, default=timezone.now)
+    is_unsubscribe = models.BooleanField (default=False)
     is_verified = models.BooleanField(default=False)
     # apostille convention
     is_trusted = models.BooleanField(default=False)
+    # Related Shoali Registration Profile with Registration Profile
+    registration_profile = models.OneToOneField(RegistrationProfile)
+    # Registration Key (duplicated inform in registration module)
+    activation_key = models.CharField(max_length=40)
+    friends = models.ManyToManyField('self', blank=True)
 
     def __unicode__(self):
         return self.nick
+
+    def create_shoaliuser (sender, instance, request, **kwargs):
+        ShoaliUser.objects.create(user=instance)
+
+    user_registered.connect(create_shoaliuser, sender=User)
 
 
 class Supply (models.Model):
