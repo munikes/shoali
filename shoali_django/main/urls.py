@@ -32,7 +32,8 @@ admin.autodiscover()
 urlpatterns = patterns('main.apps.core.views',
     # Shoali urls:
     url(r'^$', 'begin', name='begin'),
-    url(r'^user/$','user_info', name='user_info'),
+    url(r'^user/$','user_info', name='user info'),
+    url(r'^user/btc$','user_btc_addresses', name='user bitcoin addresses'),
     # Examples:
     url(r'^balance/$','getbalance', name='balance'),
     url(r'^update_task/$', 'update_task', name='update_task'),

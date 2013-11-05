@@ -152,22 +152,26 @@ class Friend (models.Model):
         return self.user.nick
 
 
-class Wallet (models.Model):
-    user = models.ForeignKey(User)
-    file_wallet = models.FileField(upload_to = 'wallets', verbose_name = 'Wallet', 
-            help_text = 'Upload the wallet.dat file', blank=True)
-
-    def __unicode__(self):
-        return self.user.name
+# Was thought handle files wallet.dat, but can be a problem because
+# you have to guard them, and really do not serve for the proper functioning 
+# of the application
+#class Wallet (models.Model):
+#    user = models.ForeignKey(ShoaliUser)
+#    file_wallet = models.FileField(upload_to='wallets', verbose_name='Wallet',
+#            help_text='Upload the wallet.dat file', blank=True)
+#
+#    def __unicode__(self):
+#        return self.user.name
 
 
 class BitcoinAddress (models.Model):
-    wallet = models.ManyToManyField(Wallet)
-    bitcoin_address = models.CharField (max_length = 34, unique = True, 
-            verbose_name = 'Bitcoin Address', 
-            help_text = 'the bitcoin address (length 27-34)', blank=True)
+#    wallets = models.ManyToManyField(Wallet)
+#    users = models.ManyToManyField(ShoaliUser,
+#            through = 'BitcoinAddress_ShoaliUser', symmetrical=False,)
+    users = models.ManyToManyField(ShoaliUser)
+    bitcoin_address = models.CharField (max_length=34, unique = True,
+            verbose_name='Bitcoin Address',
+            help_text='the bitcoin address (length 27-34).')
 
     def __unicode__(self):
         return self.bitcoin_address
-
-

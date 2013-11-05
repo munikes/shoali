@@ -27,7 +27,8 @@ import datetime
 from captcha.fields import ReCaptchaField
 from registration.forms import RegistrationForm
 
-from main.apps.core.models import ShoaliUser
+from main.apps.core.models import ShoaliUser, BitcoinAddress
+from main.apps.core.fields import BCAddressField
 
 # help messages
 helps = {
@@ -48,7 +49,9 @@ errors = {
             "is longer than 30 characters."),
     'invalid_last_name': _("Your last name have a problem, probably "
             "is longer than 60 characters."),
-    'duplicate_gpgkey': _("A user with that GPG KeyID already exists.")
+    'duplicate_gpgkey': _("A user with that GPG KeyID already exists."),
+    'duplicate_bitcoinaddress_user': _("You already have this bitcoin "
+                    "address inserted."),
 }
 
 class ShoaliUserForm (ModelForm):
@@ -126,5 +129,32 @@ class CustomRegistrationForm (RegistrationForm):
         return gpg_key
 
 
-class BitcoinAddressForm (forms.Form):
-    bitcoin_address = forms.CharField(max_length = 34, min_length = 27)
+class BitcoinAddressForm (ModelForm):
+    bitcoin_address = BCAddressField(max_length=34, min_length=27)
+    users = forms.CharField(widget=forms.HiddenInput())
+
+    class Meta:
+        model = BitcoinAddress
+
+    def clean_bitcoin_address(self):
+        """
+        Check if bitcoin address and user are duplicate
+        """
+        bitcoin_address = self.cleaned_data.get('bitcoin_address')
+        users = self.cleaned_data.get('users')
+        try:
+            BitcoinAddress.objects.get(users=users, bitcoin_address=bitcoin_address)
+        except BitcoinAddress.DoesNotExist:
+            return bitcoin_address
+        raise forms.ValidationError(errors['duplicate_bitcoinaddress_user'])
+
+    def clean(self):
+        """
+        Check that the bitcoin address starts with one or three.
+        """
+        # get bitcoin address from form
+        bitcoin_address =  self.cleaned_data.get('bitcoin_address')
+        if bitcoin_address and bitcoin_address[0] != '1' and bitcoin_address[0] != '3':
+            raise forms.ValidationError("The first digit of a bitcoin address \
+                    must be either one or three.")
+        return self.cleaned_data

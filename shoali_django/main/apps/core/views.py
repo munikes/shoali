@@ -28,6 +28,7 @@ from django.http import HttpResponse
 from django.utils import simplejson as json
 from django.contrib.auth.decorators import login_required
 
+from main.apps.core.models import BitcoinAddress
 from main.apps.core.forms import BitcoinAddressForm
 from main.apps.core.tasks import get_balance_and_progress_status
 
@@ -40,6 +41,45 @@ def user_info (request):
     form_btc = BitcoinAddressForm ()
     return render_to_response('user/main.html',{'form_btc':form_btc},
             context_instance=RequestContext(request))
+
+@login_required
+def user_btc_addresses (request):
+    # init bitcoin address form
+    form_btc = BitcoinAddressForm ()
+    if request.method == 'POST':
+        form_btc = BitcoinAddressForm (request.POST)
+        if request.POST.get('add'):
+            if form_btc.is_valid():
+                # insert BTC address
+                # see if exists
+                bitcoin_address = form_btc.cleaned_data['bitcoin_address']
+                if not BitcoinAddress.objects.filter(
+                        bitcoin_address=bitcoin_address):
+                    btc = form_btc.save(commit=False)
+                    btc.save()
+                    btc.users.add(request.user.id)
+                elif BitcoinAddress.objects.filter(
+                        bitcoin_address=bitcoin_address):
+                    btc = BitcoinAddress.objects.get(
+                            bitcoin_address=bitcoin_address)
+                    btc.users.add(request.user.id)
+                logging.debug('insert BTC address: %s', bitcoin_address)
+        elif request.POST.get('delete'):
+            try:
+                btc = BitcoinAddress.objects.get(
+                    bitcoin_address=request.POST.get('bitcoin_address'))
+                btc.users.remove(request.user.id)
+                if not btc.users.all():
+                    btc.delete()
+                logging.debug('delete BTC address: %s for user: %s',
+                    request.POST.get('bitcoin_address'), request.user.id)
+            except BitcoinAddress.DoesNotExist:
+                logging.debug('not delete BTC address because this BTC: %s not \
+exists for this user: %s', request.POST.get('bitcoin_address'), request.user.id)
+        return render_to_response('user/main.html',{'form_btc':form_btc},
+                context_instance=RequestContext(request))
+    return render_to_response('user/main.html',
+            {'form_btc':form_btc},context_instance=RequestContext(request))
 
 def getbalance (request):
     """
