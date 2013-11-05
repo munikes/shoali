@@ -20,6 +20,7 @@
 
 
 from django.conf.urls import patterns, include, url
+from django.conf import settings
 from django.views.generic.simple import direct_to_template
 
 # Uncomment the next two lines to enable the admin:
@@ -31,6 +32,7 @@ admin.autodiscover()
 urlpatterns = patterns('main.apps.core.views',
     # Shoali urls:
     url(r'^$', 'begin', name='begin'),
+    url(r'^user/$','user_info', name='user_info'),
     # Examples:
     url(r'^balance/$','getbalance', name='balance'),
     url(r'^update_task/$', 'update_task', name='update_task'),
@@ -58,3 +60,14 @@ urlpatterns += patterns('',
         name='registration_activate'),
     url(r'^accounts/', include('registration.backends.default.urls')),
 )
+
+# settings DEBUG, serve media files local python server
+if settings.DEBUG:
+    urlpatterns += patterns('',
+        url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {
+            'document_root': settings.MEDIA_ROOT,
+        }),
+        url(r'^static/(?P<path>.*)$', 'django.views.static.serve', {
+            'document_root': settings.STATIC_ROOT,
+        }),
+    )
