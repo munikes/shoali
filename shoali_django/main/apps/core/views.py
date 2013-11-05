@@ -26,12 +26,20 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponse
 from django.utils import simplejson as json
+from django.contrib.auth.decorators import login_required
 
 from main.apps.core.forms import BitcoinAddressForm
 from main.apps.core.tasks import get_balance_and_progress_status
 
 def begin (request):
     return render_to_response('index.html',{})
+
+@login_required
+def user_info (request):
+    # init bitcoin address form
+    form_btc = BitcoinAddressForm ()
+    return render_to_response('user/main.html',{'form_btc':form_btc},
+            context_instance=RequestContext(request))
 
 def getbalance (request):
     """
