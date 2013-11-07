@@ -38,8 +38,12 @@ Some of the planned features include:
 - Translate howto (django.es/blog/editar-y-traducir-inline-en-django-facilmente)
 -̶ ̶I̶n̶s̶t̶a̶l̶l̶ ̶A̶P̶I̶ ̶P̶y̶t̶h̶o̶n̶-̶B̶i̶t̶c̶o̶i̶n̶R̶P̶C̶
 -̶ ̶Q̶u̶e̶r̶i̶e̶s̶ ̶b̶i̶t̶c̶o̶i̶n̶ ̶a̶d̶d̶r̶e̶s̶s̶
-- Index all bitcoin address with rescan transactions (bitcoin-abe, bitsofproof), MongoDB
-- Change description Gitorius
-- Password encrypt in models.py
-- Validate Bitcoin Address (https://bitcointalk.org/index.php?topic=1026.0)
-- JSON wallet format (https://blockchain.info/wallet/wallet-format)
+-̶ ̶I̶n̶d̶e̶x̶ ̶a̶l̶l̶ ̶b̶i̶t̶c̶o̶i̶n̶ ̶a̶d̶d̶r̶e̶s̶s̶ ̶w̶i̶t̶h̶ ̶r̶e̶s̶c̶a̶n̶ ̶t̶r̶a̶n̶s̶a̶c̶t̶i̶o̶n̶s̶ ̶(̶b̶i̶t̶c̶o̶i̶n̶-̶a̶b̶e̶,̶ ̶b̶i̶t̶s̶o̶f̶p̶r̶o̶o̶f̶)̶,̶ ̶M̶o̶n̶g̶o̶D̶B̶
+-̶ ̶C̶h̶a̶n̶g̶e̶ ̶d̶e̶s̶c̶r̶i̶p̶t̶i̶o̶n̶ ̶G̶i̶t̶o̶r̶i̶u̶s̶
+-̶ ̶P̶a̶s̶s̶w̶o̶r̶d̶ ̶e̶n̶c̶r̶y̶p̶t̶ ̶i̶n̶ ̶m̶o̶d̶e̶l̶s̶.̶p̶y̶
+-̶ ̶V̶a̶l̶i̶d̶a̶t̶e̶ ̶B̶i̶t̶c̶o̶i̶n̶ ̶A̶d̶d̶r̶e̶s̶s̶ ̶(̶h̶t̶t̶p̶s̶:̶/̶/̶b̶i̶t̶c̶o̶i̶n̶t̶a̶l̶k̶.̶o̶r̶g̶/̶i̶n̶d̶e̶x̶.̶p̶h̶p̶?̶t̶o̶p̶i̶c̶=̶1̶0̶2̶6̶.̶0̶)̶
+-̶ ̶J̶S̶O̶N̶ ̶w̶a̶l̶l̶e̶t̶ ̶f̶o̶r̶m̶a̶t̶ ̶(̶h̶t̶t̶p̶s̶:̶/̶/̶b̶l̶o̶c̶k̶c̶h̶a̶i̶n̶.̶i̶n̶f̶o̶/̶w̶a̶l̶l̶e̶t̶/̶w̶a̶l̶l̶e̶t̶-̶f̶o̶r̶m̶a̶t̶)̶
+-̶ ̶O̶u̶t̶p̶u̶t̶ ̶i̶n̶ ̶a̶ ̶l̶o̶g̶ ̶f̶i̶l̶e̶s̶ ̶(̶d̶j̶a̶n̶g̶o̶ ̶l̶o̶g̶g̶i̶n̶g̶ ̶m̶o̶d̶u̶l̶e̶)̶
+-̶ ̶D̶o̶ ̶a̶ ̶c̶a̶c̶h̶e̶ ̶f̶o̶r̶ ̶t̶h̶e̶ ̶n̶u̶m̶b̶e̶r̶ ̶o̶f̶ ̶r̶e̶s̶c̶a̶n̶ ̶t̶r̶a̶n̶s̶a̶c̶t̶i̶o̶n̶s̶ ̶(̶f̶i̶n̶a̶l̶l̶y̶ ̶i̶t̶s̶ ̶a̶ ̶b̶a̶c̶k̶g̶r̶o̶u̶n̶d̶ ̶t̶a̶s̶k̶)̶
+- Init daemon (run server and run celery)
+- Put documentation in markdown format
