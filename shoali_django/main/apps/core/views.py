@@ -29,7 +29,7 @@ from django.utils import simplejson as json
 from django.contrib.auth.decorators import login_required
 
 from main.apps.core.models import BitcoinAddress
-from main.apps.core.forms import BitcoinAddressForm
+from main.apps.core.forms import BitcoinAddressForm, SupplyForm
 from main.apps.core.tasks import get_balance_and_progress_status
 
 def begin (request):
@@ -80,6 +80,19 @@ exists for this user: %s', request.POST.get('bitcoin_address'), request.user.id)
                 context_instance=RequestContext(request))
     return render_to_response('user/main.html',
             {'form_btc':form_btc},context_instance=RequestContext(request))
+
+@login_required
+def user_new_supply(request):
+    # init supply form
+    form_supply = SupplyForm()
+    if request.method == 'POST':
+        form_supply = SupplyForm(request.POST)
+        if form_supply.is_valid():
+            form_supply.save()
+            return render_to_response('user/main.html',{'form_supply': form_supply},
+                    context_instance=RequestContext(request))
+    return  render_to_response('user/main.html', {'form_supply': form_supply},
+        context_instance=RequestContext(request))
 
 def getbalance (request):
     """
