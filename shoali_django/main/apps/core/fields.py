@@ -8,8 +8,8 @@
 #
 #    This file is part of Shoali.
 #    IMPORTANT: The code of this file has been collected from the
-#    bitcointalk.org forum with the topic 'Python code for validating bitcoin 
-#    address' with URL: (https://bitcointalk.org/index.php?topic=1026.0), made 
+#    bitcointalk.org forum with the topic 'Python code for validating bitcoin
+#    address' with URL: (https://bitcointalk.org/index.php?topic=1026.0), made
 #    by Gavin Andresen (Lead Core Bitcoin Developer), who released the code 
 #    into the public domain.
 #
