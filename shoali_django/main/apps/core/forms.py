@@ -27,7 +27,7 @@ import datetime
 from captcha.fields import ReCaptchaField
 from registration.forms import RegistrationForm
 
-from main.apps.core.models import ShoaliUser, BitcoinAddress
+from main.apps.core.models import ShoaliUser, BitcoinAddress, Supply
 from main.apps.core.fields import BCAddressField
 
 # help messages
@@ -130,6 +130,7 @@ class CustomRegistrationForm (RegistrationForm):
 
 
 class BitcoinAddressForm (ModelForm):
+
     bitcoin_address = BCAddressField(max_length=34, min_length=27)
     users = forms.CharField(widget=forms.HiddenInput())
 
@@ -153,8 +154,14 @@ class BitcoinAddressForm (ModelForm):
         Check that the bitcoin address starts with one or three.
         """
         # get bitcoin address from form
-        bitcoin_address =  self.cleaned_data.get('bitcoin_address')
+        bitcoin_address = self.cleaned_data.get('bitcoin_address')
         if bitcoin_address and bitcoin_address[0] != '1' and bitcoin_address[0] != '3':
             raise forms.ValidationError("The first digit of a bitcoin address \
                     must be either one or three.")
         return self.cleaned_data
+
+
+class SupplyForm (ModelForm):
+
+    class Meta:
+        model = Supply
