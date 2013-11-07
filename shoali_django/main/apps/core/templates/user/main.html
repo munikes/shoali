@@ -27,14 +27,15 @@
         </form>
         {% if form_supply %}
             <p><b>Crear oferta:</b></p>
-            <form  id="form_supply" action="." method="post">
+            <form  id="form_supply" action="supply" method="post">
                 {% csrf_token %}
                 {{ form_supply.as_p }}
                 <input type="submit" value="Add"/>
                 <input type="submit" value="Remove"/>
             </form>
+        {% else %}
+            <p><a href="/user/supply/new">new money supply</a></p>
         {% endif %}
-        <p><a href="/user/supply/new/">new money supply</a></p>
     {% else %}
         <p><a href="/accounts/login/">login</a>| 
         <a href="/accounts/register/">register</a></p>
