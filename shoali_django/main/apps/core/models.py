@@ -28,6 +28,7 @@ from registration.models import RegistrationProfile
 from registration.signals import user_registered
 
 class ShoaliUser (models.Model):
+
     # Related Shoali User with Django User
     user = models.OneToOneField(User)
     # User (duplicated inform in user django auth module, fields (nick, name,
@@ -89,24 +90,25 @@ class ShoaliUser (models.Model):
 
 
 class Supply (models.Model):
+
     UNIT_CHOICES = (
-            ('sathosi', 0.00000001),
-            ('μBTC', 0.000001),
-            ('mBTC', 0.001),
-            ('BTC', 1),
-            ('kBTC', 1000),
-            ('MBTC', 1000000),
+            (0.00000001, 'sathosi (0.00000001)'),
+            (0.000001, 'μBTC (0.000001)'),
+            (0.001, 'mBTC (0.001)'),
+            (1, 'BTC (1)'),
+            (1000, 'kBTC (1000)'),
+            (1000000, 'MBTC (1000000)'),
             )
-    user = models.ManyToManyField(User)
-    amount = models.PositiveIntegerField(verbose_name = 'Amount', 
-            help_text = 'Indicate amount in .')
-    interest = models.PositiveIntegerField(verbose_name = 'Interest', 
-            help_text = 'Indicate amount the interest of supply as %', 
-            blank = True)
-    unit = models.CharField(max_length = 13, choices = UNIT_CHOICES, 
-            verbose_name = 'Unit', blank=True)
-    description = models.TextField (verbose_name = 'Description', 
-            help_text = 'Describe why you want to incur in debt in 140 characters.', 
+    users = models.ManyToManyField(ShoaliUser)
+    amount = models.PositiveIntegerField(verbose_name='Amount',
+            help_text='Indicate amount in .')
+    interest = models.PositiveIntegerField(verbose_name='Interest',
+            help_text='Indicate amount the interest of supply as %',
+            blank=True)
+    unit = models.CharField(max_length=13, choices=UNIT_CHOICES,
+            verbose_name='Unit')
+    description = models.TextField (verbose_name='Description',
+            help_text='Describe why you want to incur in debt in 140 characters.',
             blank=True)
 
     def __unicode__(self):
@@ -114,22 +116,23 @@ class Supply (models.Model):
 
 
 class Debt (models.Model):
+
     UNIT_CHOICES = (
-            ('sathosi', 0.00000001),
-            ('μBTC', 0.000001),
-            ('mBTC', 0.001),
-            ('BTC', 1),
-            ('kBTC', 1000),
-            ('MBTC', 1000000),
+            (0.00000001, 'sathosi (0.00000001)'),
+            (0.000001, 'μBTC (0.000001)'),
+            (0.001, 'mBTC (0.001)'),
+            (1, 'BTC (1)'),
+            (1000, 'kBTC (1000)'),
+            (1000000, 'MBTC (1000000)'),
             )
-    user = models.ManyToManyField(User)
+    users = models.ManyToManyField(ShoaliUser)
     supply = models.OneToOneField(Supply)
-    amount = models.PositiveIntegerField(verbose_name = 'Amount', 
-            help_text = 'Indicate amount in .')
-    unit = models.CharField(max_length = 13, choices = UNIT_CHOICES, 
-            verbose_name = 'Unit', blank=True)
-    description = models.TextField (verbose_name = 'Description', 
-            help_text = 'Describe why you want to incur in debt in 140 characters.', 
+    amount = models.PositiveIntegerField(verbose_name='Amount',
+            help_text='Indicate amount in .')
+    unit = models.CharField(max_length=13, choices=UNIT_CHOICES,
+            verbose_name='Unit')
+    description = models.TextField (verbose_name='Description',
+            help_text='Describe why you want to incur in debt in 140 characters.',
             blank=True)
 
     def __unicode__(self):
@@ -137,19 +140,13 @@ class Debt (models.Model):
 
 
 class Reputation (models.Model):
+
     user = models.OneToOneField(User)
-    amount = models.IntegerField(verbose_name = 'Amount', 
-            help_text = 'Indicate amount of kudos.')
+    amount = models.IntegerField(verbose_name='Amount',
+            help_text='Indicate amount of kudos.')
 
     def __unicode__(self):
         return self.amount
-
-
-class Friend (models.Model):
-    user = models.ForeignKey(User)
-
-    def __unicode__(self):
-        return self.user.nick
 
 
 # Was thought handle files wallet.dat, but can be a problem because
@@ -169,7 +166,7 @@ class BitcoinAddress (models.Model):
 #    users = models.ManyToManyField(ShoaliUser,
 #            through = 'BitcoinAddress_ShoaliUser', symmetrical=False,)
     users = models.ManyToManyField(ShoaliUser)
-    bitcoin_address = models.CharField (max_length=34, unique = True,
+    bitcoin_address = models.CharField (max_length=34, unique=True,
             verbose_name='Bitcoin Address',
             help_text='the bitcoin address (length 27-34).')
 
