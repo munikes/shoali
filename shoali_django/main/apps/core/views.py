@@ -22,14 +22,16 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import logging
+logger = logging.getLogger(__name__)
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponse
 from django.utils import simplejson as json
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 
-from main.apps.core.models import BitcoinAddress
-from main.apps.core.forms import BitcoinAddressForm, SupplyForm
+from main.apps.core.models import BitcoinAddress, Loan
+from main.apps.core.forms import BitcoinAddressForm, LoanForm
 from main.apps.core.tasks import get_balance_and_progress_status
 
 def begin (request):
@@ -37,9 +39,7 @@ def begin (request):
 
 @login_required
 def user_info (request):
-    # init bitcoin address form
-    form_btc = BitcoinAddressForm ()
-    return render_to_response('user/main.html',{'form_btc':form_btc},
+    return render_to_response('user/main.html',{},
             context_instance=RequestContext(request))
 
 @login_required
@@ -63,7 +63,7 @@ def user_btc_addresses (request):
                     btc = BitcoinAddress.objects.get(
                             bitcoin_address=bitcoin_address)
                     btc.users.add(request.user.id)
-                logging.debug('insert BTC address: %s', bitcoin_address)
+                logger.debug('insert BTC address: %s', bitcoin_address)
         elif request.POST.get('delete'):
             try:
                 btc = BitcoinAddress.objects.get(
@@ -71,10 +71,10 @@ def user_btc_addresses (request):
                 btc.users.remove(request.user.id)
                 if not btc.users.all():
                     btc.delete()
-                logging.debug('delete BTC address: %s for user: %s',
-                    request.POST.get('bitcoin_address'), request.user.id)
+                logger.debug('delete BTC address: %s for user: %s',
+                    bitcoin_address, request.user.id)
             except BitcoinAddress.DoesNotExist:
-                logging.debug('not delete BTC address because this BTC: %s not \
+                logger.debug('not delete BTC address because this BTC: %s not \
 exists for this user: %s', request.POST.get('bitcoin_address'), request.user.id)
         return render_to_response('user/main.html',{'form_btc':form_btc},
                 context_instance=RequestContext(request))
@@ -82,16 +82,37 @@ exists for this user: %s', request.POST.get('bitcoin_address'), request.user.id)
             {'form_btc':form_btc},context_instance=RequestContext(request))
 
 @login_required
-def user_new_supply(request):
+def lend_money(request):
     # init supply form
-    form_supply = SupplyForm()
+    form_loan = LoanForm()
     if request.method == 'POST':
-        form_supply = SupplyForm(request.POST)
-        if form_supply.is_valid():
-            form_supply.save()
-            return render_to_response('user/main.html',{'form_supply': form_supply},
+        form_loan = LoanForm(request.POST)
+        if request.POST.get('add'):
+            if form_loan.is_valid():
+                # insert the loan
+                loan = form_loan.save(commit=False)
+                loan.save()
+                loan.lenders.add(request.user.id)
+                logger.debug(form_loan)
+                logger.debug('Create amount: %s %s - repayment period: %s %s - \
+borrowers:%s and lenders:%s - interest: %s %%' % (loan.amount,
+                    loan.get_unit_display(), loan.period,
+                    loan.get_days_display(), loan.borrowers.all(),
+                    loan.lenders.all(), loan.interest))
+                return render_to_response('user/main.html',{'form_loan': form_loan},
                     context_instance=RequestContext(request))
-    return  render_to_response('user/main.html', {'form_supply': form_supply},
+        elif request.POST.get('delete'):
+            loan_list = Loan.objects.filter(id__in=request.POST.getlist('loan'))
+            for loan in loan_list:
+                logger.debug('Delete amount: %s %s - repayment period: %s %s - \
+borrowers:%s and lenders:%s - interest: %s %%' % (loan.amount,
+                    loan.get_unit_display(), loan.period,
+                    loan.get_days_display(), loan.borrowers.all(),
+                    loan.lenders.all(), loan.interest))
+            loan_list.delete()
+        return  render_to_response('user/main.html', {'form_loan': form_loan},
+            context_instance=RequestContext(request))
+    return  render_to_response('user/main.html', {'form_loan': form_loan},
         context_instance=RequestContext(request))
 
 def getbalance (request):
@@ -105,7 +126,7 @@ def getbalance (request):
         job = get_balance_and_progress_status.delay(
                 request.POST.get('bitcoin_address'))
         data = job.id
-        logging.debug("Celery task ID: %s", data)
+        logger.debug("Celery task ID: %s", data)
         json_data = json.dumps(data)
         return HttpResponse(json_data, mimetype='application/json')
     else:
@@ -121,10 +142,10 @@ def update_task(request):
     if request.is_ajax():
         if 'task' in request.POST.keys() and request.POST['task']:
             task_id = request.POST['task']
-            logging.debug("Celery task ID: %s", task_id)
+            logger.debug("Celery task ID: %s", task_id)
             task = get_balance_and_progress_status.AsyncResult(task_id)
             data = {'result':task.result, 'state':task.state}
-            logging.debug("Celery task result: %s", data)
+            logger.debug("Celery task result: %s", data)
         else:
             data = 'No task_id in the request'
     else:
