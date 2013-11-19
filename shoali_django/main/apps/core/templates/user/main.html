@@ -2,6 +2,8 @@
 
 {% block content %}
 <div id="">
+    <!--Necesary for float numbers with a lot decimals -->
+    {% load humanize %}
     {% if user.is_authenticated %}
         <p><img border="0" alt="Avatar" src="{{ MEDIA_URL }}{{ user.get_profile.avatar }}" /></p>
         <p>{{ user.get_profile.name }}</p>
@@ -14,28 +16,42 @@
         <p>{{ user.get_profile.gender }}</p>
         <p>{{ user.get_profile.subscribe }}</p>
         <p>{{ user.get_profile.is_active }}</p>
+        <p><a href="/user/btc"><button>bitcoin address</button></a>
+        <a href="/user/lend"><button>lend money</button></a></p>
         <p><b>Direcciones BTC:</b></p>
+        <form  id="form_btc" action="btc" method="post">{% csrf_token %}
         {% for btc_address in user.get_profile.bitcoinaddress_set.all %}
             <p>{{ btc_address.bitcoin_address }}</p>
         {% endfor %}
-        <form  id="form_btc" action="btc" method="post">
-            {% csrf_token %}
-            {{ form_btc.as_p }}
-            <input type="submit" value="Add" name="add"/>
-            <input type="submit" value="Delete" name="delete"/>
-            <input  type = "hidden" name="users" value={{ user.id }}>
-        </form>
-        {% if form_supply %}
-            <p><b>Crear oferta:</b></p>
-            <form  id="form_supply" action="supply" method="post">
-                {% csrf_token %}
-                {{ form_supply.as_p }}
-                <input type="submit" value="Add"/>
-                <input type="submit" value="Remove"/>
-            </form>
-        {% else %}
-            <p><a href="/user/supply/new">new money supply</a></p>
+        {% if form_btc %}
+                {{ form_btc.as_p }}
+                <input type="submit" value="Add" name="add"/>
+                <input type="submit" value="Delete" name="delete"/>
+                <input type="hidden" value={{ user.id }} name="users">
         {% endif %}
+        </form>
+        <p><b>Ofertas:</b></p>
+        <form  id="form_loan" action="lend" method="post">{% csrf_token %}
+        {% for lender_loan in user.get_profile.lenders.all %}
+            <p><input type="checkbox" name="loan" value="{{ lender_loan.pk }}"/>
+            Borrowers {{ lender_loan.borrowers.all }} - Lenders 
+            {{ lender_loan.lenders.all }} - Amount 
+            {{ lender_loan.total_amount|floatformat:8 }} 
+            BTC - Repayment period {{lender_loan.total_days }} days.</p>
+        {% endfor %}
+        {% if form_loan %}
+                <p>{{ form_loan.amount.label }}: {{ form_loan.amount }}-
+                {{ form_loan.unit }} {{ form_loan.amount.help_text }}</p>
+                <p>{{ form_loan.interest.label }}: {{ form_loan.interest }} 
+                {{ form_loan.interest.help_text }}</p>
+                <p>{{ form_loan.period.label }}: {{ form_loan.period }}-
+                {{ form_loan.days }} {{ form_loan.period.help_text }}</p>
+                <p>{{ form_loan.description.label }}: {{ form_loan.description }}
+                {{ form_loan.description.help_text }}</p>
+                <input type="submit" value="Add" name="add"/>
+                <input type="submit" value="Delete" name="delete"/>
+        {% endif %}
+        </form>
     {% else %}
         <p><a href="/accounts/login/">login</a>| 
         <a href="/accounts/register/">register</a></p>
