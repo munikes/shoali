@@ -1,3 +1,6 @@
+#    This Python file uses the following encoding: utf-8 .
+#    See http://www.python.org/peps/pep-0263.html for details
+
 #    Software as a service (SaaS), which allows anyone to manage their money,
 #    in the virtual world, transparently, without intermediaries.
 #
@@ -27,7 +30,7 @@ import datetime
 from captcha.fields import ReCaptchaField
 from registration.forms import RegistrationForm
 
-from main.apps.core.models import ShoaliUser, BitcoinAddress, Supply
+from main.apps.core.models import ShoaliUser, BitcoinAddress, Loan
 from main.apps.core.fields import BCAddressField
 
 # help messages
@@ -149,19 +152,26 @@ class BitcoinAddressForm (ModelForm):
             return bitcoin_address
         raise forms.ValidationError(errors['duplicate_bitcoinaddress_user'])
 
-    def clean(self):
-        """
-        Check that the bitcoin address starts with one or three.
-        """
-        # get bitcoin address from form
-        bitcoin_address = self.cleaned_data.get('bitcoin_address')
-        if bitcoin_address and bitcoin_address[0] != '1' and bitcoin_address[0] != '3':
-            raise forms.ValidationError("The first digit of a bitcoin address \
-                    must be either one or three.")
-        return self.cleaned_data
 
+class LoanForm (ModelForm):
 
-class SupplyForm (ModelForm):
+    UNIT_CHOICES = (
+            (0.00000001, 'sathosi (0.00000001)'),
+            (0.000001, 'μBTC (0.000001)'),
+            (0.001, 'mBTC (0.001)'),
+            (1, 'BTC (1)'),
+            (1000, 'kBTC (1000)'),
+            (1000000, 'MBTC (1000000)'),
+            )
+    DAYS_CHOICES = (
+            (1, 'days'),
+            (30, 'month (30 days)'),
+            (365, 'years (365 days)'),
+            )
+
+    unit = forms.ChoiceField (choices=UNIT_CHOICES, initial=1)
+    days = forms.ChoiceField (choices=DAYS_CHOICES, initial=1)
 
     class Meta:
-        model = Supply
+        model = Loan
+#        fields = ['amount', 'interest', 'unit', 'period', 'days']
