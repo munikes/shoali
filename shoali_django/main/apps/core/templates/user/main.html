@@ -17,7 +17,7 @@
         <p>{{ user.get_profile.subscribe }}</p>
         <p>{{ user.get_profile.is_active }}</p>
         <p><a href="/user/btc"><button>bitcoin address</button></a>
-        <a href="/user/lend"><button>lend money</button></a></p>
+        <a href="/user/loan"><button>do loan</button></a>
         <p><b>Direcciones BTC:</b></p>
         <form  id="form_btc" action="btc" method="post">{% csrf_token %}
         {% for btc_address in user.get_profile.bitcoinaddress_set.all %}
@@ -31,13 +31,21 @@
         {% endif %}
         </form>
         <p><b>Ofertas:</b></p>
-        <form  id="form_loan" action="lend" method="post">{% csrf_token %}
+        <form  id="form_loan" action="loan" method="post">{% csrf_token %}
         {% for lender_loan in user.get_profile.lenders.all %}
             <p><input type="checkbox" name="loan" value="{{ lender_loan.pk }}"/>
             Borrowers {{ lender_loan.borrowers.all }} - Lenders 
             {{ lender_loan.lenders.all }} - Amount 
             {{ lender_loan.total_amount|floatformat:8 }} 
-            BTC - Repayment period {{lender_loan.total_days }} days.</p>
+            BTC - Repayment period {{ lender_loan.total_days }} days.</p>
+        {% endfor %}
+        <p><b>Demandas:</b></p>
+        {% for borrow_loan in user.get_profile.borrowers.all %}
+            <p><input type="checkbox" name="loan" value="{{ borrow_loan.pk }}"/>
+            Borrowers {{ borrow_loan.borrowers.all }} - Lenders 
+            {{ borrow_loan.lenders.all }} - Amount 
+            {{ borrow_loan.total_amount|floatformat:8 }} 
+            BTC - Repayment period {{ borrow_loan.total_days }} days.</p>
         {% endfor %}
         {% if form_loan %}
                 <p>{{ form_loan.amount.label }}: {{ form_loan.amount }}-
@@ -48,8 +56,11 @@
                 {{ form_loan.days }} {{ form_loan.period.help_text }}</p>
                 <p>{{ form_loan.description.label }}: {{ form_loan.description }}
                 {{ form_loan.description.help_text }}</p>
-                <input type="submit" value="Add" name="add"/>
+                <input type="submit" value="Add Lend" name="add_lend"/>
+                <input type="submit" value="Add Borrow" name="add_borrow"/>
                 <input type="submit" value="Delete" name="delete"/>
+                <input type="hidden" value={{ user.id }} name="lender">
+                <input type="hidden" value={{ user.id }} name="borrower">
         {% endif %}
         </form>
     {% else %}

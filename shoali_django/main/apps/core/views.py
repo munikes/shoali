@@ -82,18 +82,21 @@ exists for this user: %s', request.POST.get('bitcoin_address'), request.user.id)
             {'form_btc':form_btc},context_instance=RequestContext(request))
 
 @login_required
-def lend_money(request):
-    # init supply form
+def do_loan(request):
+    # init loan form
     form_loan = LoanForm()
     if request.method == 'POST':
         form_loan = LoanForm(request.POST)
-        if request.POST.get('add'):
+        if request.POST.get('add_lend') or request.POST.get('add_borrow'):
+            logger.debug('Create amount')
             if form_loan.is_valid():
                 # insert the loan
                 loan = form_loan.save(commit=False)
                 loan.save()
-                loan.lenders.add(request.user.id)
-                logger.debug(form_loan)
+                if request.POST.get('add_lend'):
+                    loan.lenders.add(request.POST.get('lender'))
+                elif request.POST.get('add_borrow'):
+                    loan.borrowers.add(request.POST.get('borrower'))
                 logger.debug('Create amount: %s %s - repayment period: %s %s - \
 borrowers:%s and lenders:%s - interest: %s %%' % (loan.amount,
                     loan.get_unit_display(), loan.period,
