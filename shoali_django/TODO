@@ -45,5 +45,5 @@ Some of the planned features include:
 -̶ ̶J̶S̶O̶N̶ ̶w̶a̶l̶l̶e̶t̶ ̶f̶o̶r̶m̶a̶t̶ ̶(̶h̶t̶t̶p̶s̶:̶/̶/̶b̶l̶o̶c̶k̶c̶h̶a̶i̶n̶.̶i̶n̶f̶o̶/̶w̶a̶l̶l̶e̶t̶/̶w̶a̶l̶l̶e̶t̶-̶f̶o̶r̶m̶a̶t̶)̶
 -̶ ̶O̶u̶t̶p̶u̶t̶ ̶i̶n̶ ̶a̶ ̶l̶o̶g̶ ̶f̶i̶l̶e̶s̶ ̶(̶d̶j̶a̶n̶g̶o̶ ̶l̶o̶g̶g̶i̶n̶g̶ ̶m̶o̶d̶u̶l̶e̶)̶
 -̶ ̶D̶o̶ ̶a̶ ̶c̶a̶c̶h̶e̶ ̶f̶o̶r̶ ̶t̶h̶e̶ ̶n̶u̶m̶b̶e̶r̶ ̶o̶f̶ ̶r̶e̶s̶c̶a̶n̶ ̶t̶r̶a̶n̶s̶a̶c̶t̶i̶o̶n̶s̶ ̶(̶f̶i̶n̶a̶l̶l̶y̶ ̶i̶t̶s̶ ̶a̶ ̶b̶a̶c̶k̶g̶r̶o̶u̶n̶d̶ ̶t̶a̶s̶k̶)̶
-- Init daemon (run server and run celery)
+- Init daemon, see fabfile (run server and run celery)
 - Put documentation in markdown format
