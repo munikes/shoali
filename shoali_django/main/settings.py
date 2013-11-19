@@ -129,6 +129,7 @@ INSTALLED_APPS = (
     'djcelery',
     'registration',
     'captcha',
+    'django.contrib.humanize',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -212,6 +213,8 @@ EMAIL_HOST_USER='admin@shoali.org'
 EMAIL_HOST_PASSWORD='shoali321'
 EMAIL_USE_TLS=True
 DEFAULT_FROM_EMAIL = 'non-reply@shoali.org'
+
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 # Celery config
 import djcelery
