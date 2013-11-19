@@ -32,3 +32,4 @@ django-celery==3.0.23
 celery==3.0.24
 django-registration==1.0
 django-recaptcha==0.0.6
+django-extensions==1.1.1
