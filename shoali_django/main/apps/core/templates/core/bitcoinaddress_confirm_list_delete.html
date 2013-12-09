@@ -1,0 +1,11 @@
+<form method="post">{% csrf_token %}
+  <ul>
+  {% for btc in object_list %}
+  <li>
+      <input type="checkbox" name="btc" value="{{ btc.pk }}"/>
+      Are you sure you want to delete "{{ btc.bitcoin_address }}" ?
+  </li>
+  {% endfor %}
+  </ul>
+  <input type="submit" value="Submit" />
+</form>

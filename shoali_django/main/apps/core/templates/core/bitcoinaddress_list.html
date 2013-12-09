@@ -1,0 +1,12 @@
+{% load url from future %}
+<h1>Bitcoin Address</h1>
+<ul>
+{% for btc in object_list %}
+  <li>
+    <a href="{% url "btc_edit" btc.id %}">{{ btc.bitcoin_address }}</a>
+    <a href="{% url "btc_delete" btc.id %}">delete</a>
+  </li>
+{% endfor %}
+</ul>
+<a href="{% url "btc_new" %}">New</a>
+<a href="{% url "btc_delete_list" %}">Delete multiple</a>

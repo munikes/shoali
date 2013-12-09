@@ -1,0 +1,7 @@
+<form method="post">{% csrf_token %}
+  Are you sure you want to delete "Borrowers: {{ loan.borrowers.all }} 
+  Lenders: {{ loan.lenders.all }} 
+  Amount: {{ loan.total_amount|floatformat:8 }} BTC
+  Repayment period: {{ loan.total_days }} days" ?
+  <input type="submit" value="Submit" />
+</form>

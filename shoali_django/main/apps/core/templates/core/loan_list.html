@@ -1,0 +1,17 @@
+{% load url from future %}
+<h1>Loan</h1>
+<ul>
+{% for loan in object_list %}
+  <li>
+  <a href="{% url "loan_edit" loan.id %}">
+    Borrowers: {{ loan.borrowers.all }} - 
+    Lenders: {{ loan.lenders.all }} - 
+    Amount: {{ loan.total_amount|floatformat:-8}} BTC - 
+    Repayment period: {{ loan.total_days }} days.</a>
+    <a href="{% url "loan_delete" loan.id %}">delete</a>
+  </li>
+{% endfor %}
+</ul>
+<a href="{% url "lend_new" %}">New Lend</a>
+<a href="{% url "borrow_new" %}">New Borrow</a>
+<a href="{% url "loan_delete_list" %}">Delete multiple</a>

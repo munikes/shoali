@@ -1,0 +1,14 @@
+<form method="post">{% csrf_token %}
+  <ul>
+  {% for loan in object_list %}
+  <li>
+      <input type="checkbox" name="loan" value="{{ loan.pk }}"/>
+      Are you sure you want to delete "Borrowers: {{ loan.borrowers.all }} 
+      Lenders: {{ loan.lenders.all }} 
+      Amount: {{ loan.total_amount|floatformat:8 }} BTC
+      Repayment period: {{ loan.total_days }} days" ?
+  </li>
+  {% endfor %}
+  </ul>
+  <input type="submit" value="Submit" />
+</form>
