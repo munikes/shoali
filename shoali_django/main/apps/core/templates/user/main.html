@@ -19,16 +19,25 @@
         <p><a href="/user/btc"><button>bitcoin address</button></a>
         <a href="/user/loan"><button>do loan</button></a>
         <p><b>Direcciones BTC:</b></p>
-        <form  id="form_btc" action="btc" method="post">{% csrf_token %}
-        {% for btc_address in user.get_profile.bitcoinaddress_set.all %}
-            <p>{{ btc_address.bitcoin_address }}</p>
-        {% endfor %}
-        {% if form_btc %}
-                {{ form_btc.as_p }}
-                <input type="submit" value="Add" name="add"/>
-                <input type="submit" value="Delete" name="delete"/>
-                <input type="hidden" value={{ user.id }} name="users">
+        <form  id="form_btc" action="/user/btc" method="post">{% csrf_token %}
+        {% if not form_btc.bitcoin_address.value  %}
+            {% for btc_address in user.get_profile.bitcoinaddress_set.all %}
+                <p><input type="checkbox" name="btc" value="{{ btc_address.pk }}"/>
+                {{ btc_address.bitcoin_address }} 
+                <a href="/user/btc/{{ btc_address.pk }}">modificar</a></p>
+            {% endfor %}
+            {{ form_btc.as_p }}
+            <input type="submit" value="Add" name="add"/>
+            <input type="submit" value="Delete" name="delete"/>
+        {% else %}
+            {% for btc_address in user.get_profile.bitcoinaddress_set.all %}
+                <p>{{ btc_address.bitcoin_address }} 
+                <a href="/user/btc/{{ btc_address.pk }}">modificar</a></p>
+            {% endfor %}
+            {{ form_btc.as_p }}
+            <input type="submit" value="Save" name="save"/>
         {% endif %}
+            <input type="hidden" value={{ user.id }} name="users">
         </form>
         <p><b>Ofertas:</b></p>
         <form  id="form_loan" action="loan" method="post">{% csrf_token %}
@@ -37,7 +46,8 @@
             Borrowers {{ lender_loan.borrowers.all }} - Lenders 
             {{ lender_loan.lenders.all }} - Amount 
             {{ lender_loan.total_amount|floatformat:8 }} 
-            BTC - Repayment period {{ lender_loan.total_days }} days.</p>
+            BTC - Repayment period {{ lender_loan.total_days }} days.
+            <a href="/user/btc/{{ lender_loan.pk }}">modificar</a></p>
         {% endfor %}
         <p><b>Demandas:</b></p>
         {% for borrow_loan in user.get_profile.borrowers.all %}
@@ -45,22 +55,27 @@
             Borrowers {{ borrow_loan.borrowers.all }} - Lenders 
             {{ borrow_loan.lenders.all }} - Amount 
             {{ borrow_loan.total_amount|floatformat:8 }} 
-            BTC - Repayment period {{ borrow_loan.total_days }} days.</p>
+            BTC - Repayment period {{ borrow_loan.total_days }} days. 
+            <a href="/user/btc/{{ borrow_loan.pk }}">modificar</a></p>
         {% endfor %}
         {% if form_loan %}
                 <p>{{ form_loan.amount.label }}: {{ form_loan.amount }}-
-                {{ form_loan.unit }} {{ form_loan.amount.help_text }}</p>
+                {{ form_loan.unit }} {{ form_loan.amount.help_text }}
+                {{ form_loan.amount.errors }}{{ form_loan.unit.errors }}</p>
                 <p>{{ form_loan.interest.label }}: {{ form_loan.interest }} 
-                {{ form_loan.interest.help_text }}</p>
+                {{ form_loan.interest.help_text }}
+                {{ form_loan.interest.errors }}</p>
                 <p>{{ form_loan.period.label }}: {{ form_loan.period }}-
-                {{ form_loan.days }} {{ form_loan.period.help_text }}</p>
+                {{ form_loan.days }} {{ form_loan.period.help_text }}
+                {{ form_loan.period.errors }}{{ form_loan.days.errors }}</p>
                 <p>{{ form_loan.description.label }}: {{ form_loan.description }}
-                {{ form_loan.description.help_text }}</p>
+                {{ form_loan.description.help_text }}
+                {{ form_loan.description.errors }}</p>
                 <input type="submit" value="Add Lend" name="add_lend"/>
                 <input type="submit" value="Add Borrow" name="add_borrow"/>
                 <input type="submit" value="Delete" name="delete"/>
-                <input type="hidden" value={{ user.id }} name="lender">
-                <input type="hidden" value={{ user.id }} name="borrower">
+                <input type="hidden" value={{ user.id }} name="lenders">
+                <input type="hidden" value={{ user.id }} name="borrowers">
         {% endif %}
         </form>
     {% else %}
