@@ -21,7 +21,8 @@
 
 from django.conf.urls import patterns, include, url
 from django.conf import settings
-from django.views.generic.simple import direct_to_template
+from django.views.generic import TemplateView
+from django.contrib.auth.decorators import login_required
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -29,12 +30,40 @@ from main.apps.core.backend.views import CustomRegistrationView, CustomActivatio
 from main.apps.core.forms import CustomRegistrationForm
 admin.autodiscover()
 
+from main.apps.core import views
+
 urlpatterns = patterns('main.apps.core.views',
     # Shoali urls:
-    url(r'^$', 'begin', name='begin'),
+    url(r'^$', views.BeginView.as_view(), name='begin'),
+    url(r'^btc/$',
+        login_required(views.BitcoinAddressList.as_view()), name='btc_list'),
+    url(r'^btc/new/$',
+        login_required(views.BitcoinAddressCreate.as_view()), name='btc_new'),
+    url(r'^btc/edit/(?P<pk>\d+)$',
+        login_required(views.BitcoinAddressUpdate.as_view()), name='btc_edit'),
+    url(r'^btc/delete/(?P<pk>\d+)$',
+        login_required(views.BitcoinAddressDelete.as_view()), name='btc_delete'),
+    url(r'^btc/delete_list/$',
+        login_required(views.BitcoinAddressDeleteList.as_view()),
+        name='btc_delete_list'),
+    url(r'^loan/$',
+        login_required(views.LoanList.as_view()), name='loan_list'),
+    url(r'^loan/new_lend/$',
+        login_required(views.LendCreate.as_view()), name='lend_new'),
+    url(r'^loan/new_borrow/$',
+        login_required(views.BorrowCreate.as_view()), name='borrow_new'),
+    url(r'^loan/edit/(?P<pk>\d+)$',
+        login_required(views.LoanUpdate.as_view()), name='loan_edit'),
+    url(r'^loan/delete/(?P<pk>\d+)$',
+        login_required(views.LoanDelete.as_view()), name='loan_delete'),
+    url(r'^loan/delete_list/$',
+        login_required(views.LoanDeleteList.as_view()),
+        name='loan_delete_list'),
     url(r'^user/$','user_info', name='user info'),
     url(r'^user/btc$','user_btc_addresses', name='user bitcoin addresses'),
+    url(r'^user/btc/(?P<id>\d+)$','user_btc_addresses', name='edit user bitcoin addresses'),
     url(r'^user/loan$','do_loan', name='do loan'),
+    url(r'^user/loan/(?P<id>\d+)$','do_loan', name='edit loan'),
     # Examples:
     url(r'^balance/$','getbalance', name='balance'),
     url(r'^update_task/$', 'update_task', name='update_task'),
@@ -50,8 +79,8 @@ urlpatterns += patterns('',
     url(r'^accounts/register/$', CustomRegistrationView.as_view(
         form_class=CustomRegistrationForm),
         name='registration_register'),
-    url(r'^accounts/activate/complete/$', direct_to_template,
-        {'template': 'registration/activation_complete.html'},
+    url(r'^accounts/activate/complete/$', 
+        TemplateView.as_view(template_name='registration/activation_complete.html'),
         name='registration_activation_complete'),
     # Activation keys get matched by \w+ instead of the more specific
     # [a-fA-F0-9]{40} because a bad activation key should still get to the view;
@@ -63,7 +92,7 @@ urlpatterns += patterns('',
     url(r'^accounts/', include('registration.backends.default.urls')),
 )
 
-# settings DEBUG, serve media files local python server
+# if settings DEBUG, serve media files local python server
 if settings.DEBUG:
     urlpatterns += patterns('',
         url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {
