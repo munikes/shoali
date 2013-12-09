@@ -103,10 +103,11 @@ class Loan (models.Model):
             (Decimal('1000000'), 'MBTC (1000000)'),
             )
     DAYS_CHOICES = (
-            (Decimal('1'), 'days'),
-            (Decimal('30'), 'month (30 days)'),
-            (Decimal('365'), 'years (365 days)'),
+            (1, 'days'),
+            (30, 'month (30 days)'),
+            (365, 'years (365 days)'),
             )
+    owner = models.ForeignKey(ShoaliUser)
     borrowers = models.ManyToManyField(ShoaliUser, related_name="borrowers",
             blank=True)
     lenders = models.ManyToManyField(ShoaliUser, related_name="lenders",
@@ -114,7 +115,7 @@ class Loan (models.Model):
     amount = models.DecimalField(verbose_name='Amount', max_digits=20, 
             decimal_places=8, help_text='Indicate amount.')
     interest = models.DecimalField(verbose_name='Interest', max_digits=6,
-            decimal_places=3, blank=True,
+            decimal_places=3,
             help_text='Indicate amount the interest of supply as %.')
     unit = models.DecimalField(max_length=1, choices=UNIT_CHOICES,
             max_digits=15, verbose_name='Unit', decimal_places=8)
@@ -126,7 +127,7 @@ class Loan (models.Model):
     days = models.PositiveIntegerField(max_length=1,choices=DAYS_CHOICES, verbose_name='Days')
 
     def _get_total_amount(self):
-        return  (self.amount * self.unit) * self.interest/Decimal('100') + (self.amount * self.unit)
+        return (self.amount * self.unit) * self.interest/Decimal('100') + (self.amount * self.unit)
     total_amount = property(_get_total_amount)
 
     def _get_total_days(self):
@@ -149,7 +150,7 @@ lenders:[%s] - interest: %s %%' % (self.amount, self.unit, self.period, self.day
 
 class Reputation (models.Model):
 
-    user = models.OneToOneField(User)
+    user = models.OneToOneField(ShoaliUser)
     amount = models.IntegerField(verbose_name='Amount',
             help_text='Indicate amount of kudos.')
 
