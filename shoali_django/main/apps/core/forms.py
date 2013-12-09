@@ -27,6 +27,7 @@ from django import forms
 from django.utils.translation import ugettext_lazy as _
 from django.forms.extras.widgets import SelectDateWidget
 import datetime
+from decimal import Decimal
 from captcha.fields import ReCaptchaField
 from registration.forms import RegistrationForm
 
@@ -156,12 +157,12 @@ class BitcoinAddressForm (ModelForm):
 class LoanForm (ModelForm):
 
     UNIT_CHOICES = (
-            (0.00000001, 'sathosi (0.00000001)'),
-            (0.000001, 'μBTC (0.000001)'),
-            (0.001, 'mBTC (0.001)'),
-            (1, 'BTC (1)'),
-            (1000, 'kBTC (1000)'),
-            (1000000, 'MBTC (1000000)'),
+            ('0.00000001', 'sathosi (0.00000001)'),
+            ('0.00000100', 'μBTC (0.000001)'),
+            ('0.00100000', 'mBTC (0.001)'),
+            ('1.00000000', 'BTC (1)'),
+            ('1000.00000000', 'kBTC (1000)'),
+            ('1000000.00000000', 'MBTC (1000000)'),
             )
     DAYS_CHOICES = (
             (1, 'days'),
@@ -169,9 +170,15 @@ class LoanForm (ModelForm):
             (365, 'years (365 days)'),
             )
 
-    unit = forms.ChoiceField (choices=UNIT_CHOICES, initial=1)
+    unit = forms.ChoiceField (choices=UNIT_CHOICES, initial='1.00000000')
     days = forms.ChoiceField (choices=DAYS_CHOICES, initial=1)
+    interest = forms.DecimalField(min_value=0)
+    owner = forms.ModelChoiceField(queryset=ShoaliUser.objects.all(),
+            widget=forms.HiddenInput())
+    lenders = forms.ModelMultipleChoiceField(queryset=ShoaliUser.objects.all(),
+            widget=forms.MultipleHiddenInput(), required=False)
+    borrowers = forms.ModelMultipleChoiceField(queryset=ShoaliUser.objects.all(),
+            widget=forms.MultipleHiddenInput(), required=False)
 
     class Meta:
         model = Loan
-#        fields = ['amount', 'interest', 'unit', 'period', 'days']
