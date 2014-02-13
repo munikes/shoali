@@ -61,7 +61,7 @@ def get_blocks(connection, bitcoin_address, first_block, last_block):
         first_block = 1
     for i in range (first_block, last_block + 1):
         # get block info
-        while True:
+        while True and bitcoin_address != None and connection != None:
             try:
                 block = connection.getblock(connection.getblockhash(i))
             except socket.timeout:
@@ -133,7 +133,7 @@ def sum_balance(connection, bitcoin_entry):
         blocks = blocks[1:]
     for i in blocks:
         # get block info
-        while True:
+        while True and connection != None:
             try:
                 block = connection.getblock(connection.getblockhash(i))
             except socket.timeout:
@@ -177,7 +177,7 @@ def get_block(connection, bitcoin_address, number_block):
     and returns if this block is involved with this bitcoin address
     """
     # get block info
-    while True:
+    while True and bitcoin_address != None and connection != None:
         try:
             block = connection.getblock(connection.getblockhash(number_block))
         except socket.timeout:
