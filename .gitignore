@@ -1,7 +1,10 @@
 # Eclipse local files
 .project
 .pydevproject
+.settings/
 # Python binary files
 *pyc
 # Vim swap files
 *swp
+# Shoali media files
+shoali_django/main/apps/core/media/
