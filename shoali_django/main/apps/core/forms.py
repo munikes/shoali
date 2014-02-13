@@ -27,7 +27,6 @@ from django import forms
 from django.utils.translation import ugettext_lazy as _
 from django.forms.extras.widgets import SelectDateWidget
 import datetime
-from decimal import Decimal
 from captcha.fields import ReCaptchaField
 from registration.forms import RegistrationForm
 
