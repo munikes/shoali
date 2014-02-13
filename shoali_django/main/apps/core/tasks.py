@@ -22,6 +22,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import logging
+logger = logging.getLogger(__name__)
 from decimal import Decimal
 from celery.task import task
 from pymongo import Connection
@@ -45,34 +46,34 @@ def get_balance_and_progress_status(bitcoin_address):
     con_btc = bitcoinrpc.connect_to_remote('mUniKeS', 'XXXXXXXXXXXXXXXXXXXX',
             host='agora-2', port=8332, use_https=False)
     try:
-        logging.debug('Connection info: %s', con_btc.getinfo())
+        logger.debug('Connection info: %s', con_btc.getinfo())
     except Exception:
-        logging.exception('Connection to bitcoin client failed.')
+        logger.exception('Connection to bitcoin client failed.')
         raise Exception ('Connection to bitcoin client failed.')
     # connect to database
     try:
         con_db = Connection('localhost', 27017)
-        logging.debug('database connection: %s', con_db)
+        logger.debug('database connection: %s', con_db)
     except Exception as e:
-        logging.exception(e)
+        logger.exception(e)
         raise Exception (e)
     db = con_db['shoali']
-    logging.debug('database name: %s', db)
+    logger.debug('database name: %s', db)
     db_blocks = db['blocks']
-    logging.debug('database collection: %s', db_blocks)
+    logger.debug('database collection: %s', db_blocks)
     # get the total number of blocks in this moment
     #number_blocks = con_btc.getblockcount()
-    logging.debug('number of BTC blocks: %d', number_blocks)
+    logger.debug('number of BTC blocks: %d', number_blocks)
     # select the database entry with this bitcoin address
     bitcoin_entry = db_blocks.find_one({'bitcoin_address':bitcoin_address})
-    logging.debug('bitcoin MongoDB entry: %s', bitcoin_entry)
+    logger.debug('bitcoin MongoDB entry: %s', bitcoin_entry)
     # select the database entry with this bitcoin address
     if bitcoin_entry and bitcoin_entry.get('last_block') < number_blocks:
         # update bitcoin database entry
         first_block = bitcoin_entry.get('last_block') + 1
         update = True
     elif bitcoin_entry and bitcoin_entry.get('last_block') > number_blocks:
-        logging.warning('The last block of %s is bigger than the number of\
+        logger.warning('The last block of %s is bigger than the number of\
  blocks in bitcoin network, entry will be deleted from the\
  database and will try again to put!', bitcoin_address)
         db_blocks.remove({'bitcoin_address':bitcoin_address})
@@ -96,11 +97,11 @@ def get_balance_and_progress_status(bitcoin_address):
             bitcoin_entry['last_block'] = number_blocks
             bitcoin_entry['blocks'] += blocks
             bitcoin_entry['blocks'].sort()
-            logging.info ('bitcoin entry: %s has been update', bitcoin_entry)
+            logger.info ('bitcoin entry: %s has been update', bitcoin_entry)
         else:
             bitcoin_entry = {'bitcoin_address':bitcoin_address, 'blocks':blocks,
                     'first_block':first_block, 'last_block':number_blocks}
-            logging.info('blocks: %s', bitcoin_entry)
+            logger.info('blocks: %s', bitcoin_entry)
         balance = sum_balance(con_btc, bitcoin_entry)
         if isinstance(balance, Decimal):
             balance = float(balance)
@@ -122,33 +123,33 @@ def get_balance(bitcoin_address):
     con_btc = bitcoinrpc.connect_to_remote('mUniKeS', 'XXXXXXXXXXXXXXXXXXXX',
             host='agora-2', port=8332, use_https=False)
     try:
-        logging.debug('Connection info: %s', con_btc.getinfo())
+        logger.debug('Connection info: %s', con_btc.getinfo())
     except Exception:
-        logging.exception('Connection to bitcoin client failed.')
+        logger.exception('Connection to bitcoin client failed.')
         raise Exception ('Connection to bitcoin client failed.')
     # connect to database
     try:
         con_db = Connection('localhost', 27017)
-        logging.debug('database connection: %s', con_db)
+        logger.debug('database connection: %s', con_db)
     except Exception as e:
-        logging.exception(e)
+        logger.exception(e)
         raise Exception (e)
     db = con_db['shoali']
-    logging.debug('database name: %s', db)
+    logger.debug('database name: %s', db)
     blocks = db['blocks']
-    logging.debug('database collection: %s', blocks)
+    logger.debug('database collection: %s', blocks)
     # get the total number of blocks in this moment
     #number_blocks = con_btc.getblockcount()
-    logging.debug('number of BTC blocks: %d', number_blocks)
+    logger.debug('number of BTC blocks: %d', number_blocks)
     # select the database entry with this bitcoin address
     bitcoin_entry = blocks.find_one({'bitcoin_address':bitcoin_address})
-    logging.debug('bitcoin MongoDB entry: %s', bitcoin_entry)
+    logger.debug('bitcoin MongoDB entry: %s', bitcoin_entry)
     # select the database entry with this bitcoin address
     if bitcoin_entry and bitcoin_entry.get('last_block') < number_blocks:
         # update bitcoin database entry
         update = True
     elif bitcoin_entry and bitcoin_entry.get('last_block') > number_blocks:
-        logging.warning('The last block of %s is bigger than the number of\
+        logger.warning('The last block of %s is bigger than the number of\
  blocks in bitcoin network, entry will be deleted from the\
  database and will try again to put!', bitcoin_address)
         blocks.remove({'bitcoin_address':bitcoin_address})
