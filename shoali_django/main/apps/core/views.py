@@ -268,18 +268,16 @@ def getbalance (request):
     """
     Get balance of a bitcoin address
     """
-    # init variables
-    form_btc = BitcoinAddressForm()
-    data = ''
     if request.is_ajax():
-        job = get_balance_and_progress_status.delay(
-                request.POST.get('bitcoin_address'))
-        data = job.id
-        logger.debug("Celery task ID: %s", data)
-        json_data = json.dumps(data)
-        return HttpResponse(json_data, mimetype='application/json')
+        btc_list = BitcoinAddress.objects.filter(users__id=request.user.id)
+        for btc in btc_list:
+            job = get_balance_and_progress_status.delay(btc)
+            data = job.id
+            logger.debug("Celery task ID: %s", data)
+            json_data = json.dumps(data)
+            return HttpResponse(json_data, mimetype='application/json')
     else:
-        return render_to_response ('query.html', {'form_btc': form_btc},
+        return render_to_response ('query.html',
             context_instance = RequestContext(request))
 
 def update_task(request):

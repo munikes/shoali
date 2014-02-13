@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base-js.html" %}
 
 {% block content %}
 <div id="">
@@ -38,6 +38,15 @@
             <input type="submit" value="Save" name="save"/>
         {% endif %}
             <input type="hidden" value={{ user.id }} name="users">
+        </form>
+        <p><b>Balance</b></p>
+        <form  id="balance-form" action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            Balance: <font color="#00ffff" id="balance">0</font> BTC.<br/>
+            <input type="hidden" name="task" id="task_id" value=""/>
+            <div id="progress-bar"><div class="progress-label"></div></div>
+            <div id="msgid"></div>
+            <button type="submit">Refresh</button>
         </form>
         <p><b>Ofertas:</b></p>
         <form  id="form_loan" action="loan" method="post">{% csrf_token %}
