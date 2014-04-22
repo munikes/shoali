@@ -1,16 +1,20 @@
 #Project leader:
  * mUniKeS <munikes@shoali.org>
  * Diego Pardilla Mata <pardilla@member.fsf.org>
+ 
 #Developers for this release:
  * mUniKeS <munikes@shoali.org>
  * Diego Pardilla Mata <pardilla@member.fsf.org>
+ 
 #Translators:
- * Spanish (ES) 
- * * mUniKeS <munikes@shoali.org> 
- * * Diego Pardilla Mata <pardilla@member.fsf.org>
+ 1. Spanish (ES) 
+    * mUniKeS <munikes@shoali.org> 
+    * Diego Pardilla Mata <pardilla@member.fsf.org>
+ 
 #Documentation:
  * mUniKeS <munikes@shoali.org>
  * Diego Pardilla Mata <pardilla@member.fsf.org>
+ 
 #Package Maintainers:
  * mUniKeS <munikes@shoali.org>
  * Diego Pardilla Mata <pardilla@member.fsf.org>
