@@ -19,19 +19,19 @@
      #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-**Shoali is a software as a service (SaaS) do it with Django framework, which 
+Shoali is a software as a service (SaaS) do it with Django framework, which 
 allows anyone to manage their money, in the virtual world, transparently, 
-without intermediaries.**
+without intermediaries.
 
-**It has (among others) the following major features**
+It has (among others) the following major features
 
- * **Lend money to anyone you want and how you want, without intermediaries.**
- * **Borrow money to anyone you want and how you want, without intermediaries.**
- * **Allows you to manage, in the virtual world, your money transparently.**
+ * Lend money to anyone you want and how you want, without intermediaries.
+ * Borrow money to anyone you want and how you want, without intermediaries.
+ * Allows you to manage, in the virtual world, your money transparently.
 
 #Installation:
 
- See INSTALL file for information on how to install shoali
+ See [INSTALL](INSTALL.md) file for information on how to install shoali
 
 #Starting shoali:
 

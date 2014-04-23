@@ -29,13 +29,13 @@ Some of the planned features include:
 - PyPi package
 -̶ ̶D̶e̶s̶c̶r̶i̶p̶t̶i̶o̶n̶ ̶p̶r̶o̶g̶r̶a̶m̶ ̶i̶n̶ ̶R̶E̶A̶D̶M̶E̶ ̶f̶i̶l̶e̶
 -̶ ̶D̶e̶v̶e̶l̶o̶p̶m̶e̶n̶t̶ ̶d̶e̶s̶c̶r̶i̶p̶t̶i̶o̶n̶ ̶t̶o̶ ̶R̶E̶A̶D̶M̶E̶,̶ ̶g̶i̶t̶o̶r̶i̶u̶s̶
-- Starting Shoali README file
-- INSTALL file
+-̶ ̶S̶t̶a̶r̶t̶i̶n̶g̶ ̶S̶h̶o̶a̶l̶i̶ ̶R̶E̶A̶D̶M̶E̶ ̶f̶i̶l̶e̶
+-̶ ̶I̶N̶S̶T̶A̶L̶L̶ ̶f̶i̶l̶e̶
 -̶ ̶P̶u̶t̶ ̶p̶r̶o̶j̶e̶c̶t̶ ̶w̶i̶t̶h̶ ̶G̶i̶t̶F̶l̶o̶w̶
 - Edit Wiki (Gitorius)
 - More information FSF directory
 - More information P2P Foundation
-- Translate howto (django.es/blog/editar-y-traducir-inline-en-django-facilmente)
+- Translate howto (django.es/blog/editar-y-traducir-inline-en-django-fácilmente)
 -̶ ̶I̶n̶s̶t̶a̶l̶l̶ ̶A̶P̶I̶ ̶P̶y̶t̶h̶o̶n̶-̶B̶i̶t̶c̶o̶i̶n̶R̶P̶C̶
 -̶ ̶Q̶u̶e̶r̶i̶e̶s̶ ̶b̶i̶t̶c̶o̶i̶n̶ ̶a̶d̶d̶r̶e̶s̶s̶
 -̶ ̶I̶n̶d̶e̶x̶ ̶a̶l̶l̶ ̶b̶i̶t̶c̶o̶i̶n̶ ̶a̶d̶d̶r̶e̶s̶s̶ ̶w̶i̶t̶h̶ ̶r̶e̶s̶c̶a̶n̶ ̶t̶r̶a̶n̶s̶a̶c̶t̶i̶o̶n̶s̶ ̶(̶b̶i̶t̶c̶o̶i̶n̶-̶a̶b̶e̶,̶ ̶b̶i̶t̶s̶o̶f̶p̶r̶o̶o̶f̶)̶,̶ ̶M̶o̶n̶g̶o̶D̶B̶
@@ -46,4 +46,4 @@ Some of the planned features include:
 -̶ ̶O̶u̶t̶p̶u̶t̶ ̶i̶n̶ ̶a̶ ̶l̶o̶g̶ ̶f̶i̶l̶e̶s̶ ̶(̶d̶j̶a̶n̶g̶o̶ ̶l̶o̶g̶g̶i̶n̶g̶ ̶m̶o̶d̶u̶l̶e̶)̶
 -̶ ̶D̶o̶ ̶a̶ ̶c̶a̶c̶h̶e̶ ̶f̶o̶r̶ ̶t̶h̶e̶ ̶n̶u̶m̶b̶e̶r̶ ̶o̶f̶ ̶r̶e̶s̶c̶a̶n̶ ̶t̶r̶a̶n̶s̶a̶c̶t̶i̶o̶n̶s̶ ̶(̶f̶i̶n̶a̶l̶l̶y̶ ̶i̶t̶s̶ ̶a̶ ̶b̶a̶c̶k̶g̶r̶o̶u̶n̶d̶ ̶t̶a̶s̶k̶)̶
 - Init daemon, see fabfile (run server and run celery)
-- Put documentation in markdown format
+-̶ ̶P̶u̶t̶ ̶d̶o̶c̶u̶m̶e̶n̶t̶a̶t̶i̶o̶n̶ ̶i̶n̶ ̶m̶a̶r̶k̶d̶o̶w̶n̶ ̶f̶o̶r̶m̶a̶t̶

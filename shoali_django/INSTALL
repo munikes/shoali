@@ -23,11 +23,20 @@ Install (TODO)
 
 =======
 
-XXXXXXXXXXXXX
-http://packages.python.org/shoali (package python TODO)
+Supposed something like this:
+1. Download in http://packages.python.org/shoali (package python TODO) the file Shoali-XXXX.egg
+2. apt-get install python2.7 python-pip
+3. pip install shoali
 
 Uninstall (TODO)
 
 =========
 
-XXXXXXXXXXXXX
+Supposed something like this:
+1. pip uninstall shoali
+2. If you want, apt-get remove --purge python2.7 python-pip
+3. rm shoali-XXXX.egg
+
+If you want, see the shoali wiki:
+ * Now: https://gitorious.org/shoali/pages/Home
+ * In the future: http://wiki.shoali.org

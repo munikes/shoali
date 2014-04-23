@@ -29,7 +29,7 @@ Some of the planned features include:
  * PyPi package
  * <del>Description program in README file</del>
  * <del>Development description to README, gitorius</del>
- * Starting Shoali README file
+ * <del>Starting Shoali README file</del>
  * <del>INSTALL file</del>
  * <del>Put project with GitFlow</del>
  * Edit Wiki (Gitorius)
