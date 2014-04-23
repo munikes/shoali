@@ -23,27 +23,27 @@
 
 Some of the planned features include:
 
- * ~~Description program at the start of all the files~~
+ * <del>Description program at the start of all the files</del>
  * Web
  * Wiki
  * PyPi package
- * ~~Description program in README file~~
- * ~~Development description to README, gitorius~~
+ * <del>Description program in README file</del>
+ * <del>Development description to README, gitorius</del>
  * Starting Shoali README file
- * ~~INSTALL file~~
- * ~~Put project with GitFlow~~
+ * <del>INSTALL file</del>
+ * <del>Put project with GitFlow</del>
  * Edit Wiki (Gitorius)
  * More information FSF directory
  * More information P2P Foundation
- * Translate howto (django.es/blog/editar-y-traducir-inline-en-django-facilmente)
- * ~~Install API Python-BitcoinRPC~~
- * ~~Queries bitcoin address~~
- * ~~Index all bitcoin address with rescan transactions (bitcoin-abe, bitsofproof), MongoDB~~
- * ~~Change description Gitorius~~
- * ~~Password encrypt in models.py~~
- * ~~Validate Bitcoin Address (https://bitcointalk.org/index.php?topic=1026.0)~~
- * ~~JSON wallet format (https://blockchain.info/wallet/wallet-format)~~
- * ~~Output in a log files (django logging module)~~
- * ~~Do a cache for the number of rescan transactions (finally its a background task)~~
+ * Translate howto (django.es/blog/editar-y-traducir-inline-en-django-fácilmente)
+ * <del>Install API Python-BitcoinRPC</del>
+ * <del>Queries bitcoin address</del>
+ * <del>Index all bitcoin address with rescan transactions (bitcoin-abe, bitsofproof), MongoDB</del>
+ * <del>Change description Gitorius</del>
+ * <del>Password encrypt in models.py</del>
+ * <del>Validate Bitcoin Address (https://bitcointalk.org/index.php?topic=1026.0)</del>
+ * <del>JSON wallet format (https://blockchain.info/wallet/wallet-format)</del>
+ * <del>Output in a log files (django logging module)</del>
+ * <del>Do a cache for the number of rescan transactions (finally its a background task)</del>
  * Init daemon, see fabfile (run server and run celery)
- * ~~Put documentation in markdown format~~
+ * <del>Put documentation in markdown format</del>

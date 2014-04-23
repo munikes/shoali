@@ -21,13 +21,13 @@
 
 **Shoali is a software as a service (SaaS) do it with Django framework, which 
 allows anyone to manage their money, in the virtual world, transparently, 
-without intermediaries.
+without intermediaries.**
 
-It has (among others) the following major features
+**It has (among others) the following major features**
 
- * Lend money to anyone you want and how you want, without intermediaries.
- * Borrow money to anyone you want and how you want, without intermediaries.
- * Allows you to manage, in the virtual world, your money transparently.**
+ * **Lend money to anyone you want and how you want, without intermediaries.**
+ * **Borrow money to anyone you want and how you want, without intermediaries.**
+ * **Allows you to manage, in the virtual world, your money transparently.**
 
 #Installation:
 
@@ -39,21 +39,21 @@ It has (among others) the following major features
 
 #More information:
 
- * http://www.shoali.org (web & homepage TODO)
- * http://notebook.papersize.org (blog, it's possible that in the future change 
- * to the domain shoali.org, with the URL: blog.shoali.org)
- * http://wiki.shoali.org (wiki TODO)
+ * <http://www.shoali.org> (web & homepage TODO)
+ * <http://notebook.papersize.org> (blog, it's possible that in the future 
+ change to the domain shoali.org, with the URL: blog.shoali.org)
+ * <https://gitorious.org/shoali/pages/Home> (now), <http://wiki.shoali.org> (wiki TODO)
 
 #Written by:
 
- see AUTHORS for more information
+ see [AUTHORS](AUTHORS.md) for more information
 
 #Reporting Bugs:
 
  Please report bugs to our mailing list or our bugtracker:
 
- * dev@shoali.org (Developers mailing list)
- * http://bug.shoali.org (Bugtracker)
+ * <dev@shoali.org> (Developers mailing list)
+ * <http://bug.shoali.org> (Bugtracker)
 
 #Development:
 
@@ -64,13 +64,13 @@ It has (among others) the following major features
 
  For more information:
 
- * https://gitorious.org/shoali (Git Repository)
- * dev@shoali.org (Developers mailing list)
- * admin@shoali.org (Administrator)
+ * <https://gitorious.org/shoali> (Git Repository)
+ * <dev@shoali.org> (Developers mailing list)
+ * <admin@shoali.org> (Administrator)
 
 #Contacting us:
 
- * users@shoali.org (Users mailing list)
- * munikes@shoali.org (mUniKeS)
- * munikes@members.fsf.org (mUniKeS)
- * pardilla@members.fsf.org (Diego Pardilla Mata)
+ * <users@shoali.org> (Users mailing list)
+ * <munikes@shoali.org> (mUniKeS)
+ * <munikes@members.fsf.org> (mUniKeS)
+ * <pardilla@members.fsf.org> (Diego Pardilla Mata)

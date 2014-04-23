@@ -37,5 +37,5 @@ Supposed something like this:
 
 If you want, see the shoali wiki:
 
- * Now: https://gitorious.org/shoali/pages/Home
- * In the future: http://wiki.shoali.org
+ * Now: <https://gitorious.org/shoali/pages/Home>
+ * In the future: <http://wiki.shoali.org>
