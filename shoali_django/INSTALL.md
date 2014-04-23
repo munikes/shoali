@@ -36,5 +36,6 @@ Supposed something like this:
 3. `rm shoali-XXXX.egg`
 
 If you want, see the shoali wiki:
+
  * Now: https://gitorious.org/shoali/pages/Home
  * In the future: http://wiki.shoali.org
