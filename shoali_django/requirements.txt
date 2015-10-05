@@ -24,12 +24,14 @@
 #    installs any dependencies listed in it.
 
 
-django==1.4.3
-psycopg2==2.4.5
+Django==1.8.5
 bitcoin-python==0.3
-pymongo==2.6.2
-django-celery==3.0.23
-celery==3.0.24
-django-registration==1.0
-django-recaptcha==0.0.6
-django-extensions==1.1.1
+celery==3.1.18
+django-bootstrap3==6.2.2
+django-celery==3.1.16
+django-extensions==1.5.7
+django-recaptcha==1.0.4
+django-registration-redux==1.2
+django-remember-me===0.2d0
+psycopg2==2.6.1
+pymongo==3.0.3
