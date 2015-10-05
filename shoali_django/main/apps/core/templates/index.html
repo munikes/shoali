@@ -1,16 +1,15 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div id="" class="">
-    <ul id="" class="">
-        <li>
+<div class="jumbotron">
+  <h1>Bienvenido a Shoali</h1>
+  <p>Entra en Shoali</p>
         {% if not user.is_authenticated %}
-            <a href="/accounts/login/">login</a>
-            | <a href="/accounts/register/">register</a>
+            <p><a class="btn btn-primary btn-lg" href="/accounts/login/" role="button">login</a>
+            | <a class="btn btn-primary btn-lg" href="/accounts/register/" role="button">register</a></p>
+
         {% else %}
-            <a href="/accounts/logout/">logout</a>
+            <p><a class="btn btn-primary btn-lg" href="/accounts/logout/" role="button">logout</a></p>
         {% endif %}
-        </li>
-    </ul>
 </div>
 {% endblock %}

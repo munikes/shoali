@@ -1,12 +1,27 @@
+{# Load the tag library #}
+{% load bootstrap3 %}
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
+  <link rel="icon" href="/static/img/shoalilogo.ico" type="image/x-icon">
   {% block javascript %}{% endblock %}
+  {# Load CSS and JavaScript #}
+  {% bootstrap_css %}
+  {# Display django.contrib.messages as Bootstrap alerts #}
+  {% bootstrap_messages %}
+  <!-- Custom styles -->
+  <link href="/static/css/cover.css" rel="stylesheet">
+  <!-- Sign in styles -->
+  <link href="/static/css/signin.css" rel="stylesheet">
   <title>Shoali</title>
 </head>
 <body>
-  <h1>{% block title %}Shoali{% endblock %}</h1>
-  {% block content %}{% endblock %}
+  <div class="container">
+    {% block content %}{% endblock %}
+  </div>
+  {% bootstrap_javascript jquery=1 %}
 </body>
 </html>
