@@ -89,6 +89,7 @@ urlpatterns += patterns('',
     url(r'^accounts/activate/(?P<activation_key>\w+)/$', 
         CustomActivationView.as_view(),
         name='registration_activate'),
+    url(r'^accounts/login/$','remember_me.views.remember_me_login',name = 'remember_me_login'),
     url(r'^accounts/', include('registration.backends.default.urls')),
 )
 
