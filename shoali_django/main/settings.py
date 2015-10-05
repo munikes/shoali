@@ -120,6 +120,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
@@ -128,8 +129,9 @@ INSTALLED_APPS = (
     'django_extensions',
     'djcelery',
     'registration',
+    'remember_me',
     'captcha',
-    'django.contrib.humanize',
+    'bootstrap3',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -190,12 +192,15 @@ LOGGING = {
     }
 }
 
-LOGIN_REDIRECT_URL = '/user/'
-# This is the number of days users will have to activate their accounts after$
-# registering. If a user does not activate within that period, the account will
-# remain permanently inactive and may be deleted by maintenance scripts
-# provided in django-registration.
-ACCOUNT_ACTIVATION_DAYS = 7
+
+# Registration config
+REGISTRATION_OPEN = True        # If True, users can register
+ACCOUNT_ACTIVATION_DAYS = 7     # One-week activation window; you may, of course, use a different value.
+REGISTRATION_AUTO_LOGIN = True  # If True, the user will be automatically logged in.
+LOGIN_REDIRECT_URL = '/user/'   # The page you want users to arrive at after they successful log in
+LOGIN_URL = '/accounts/login/'  # The page users are directed to if they are not logged in,
+                                # and are trying to access pages requiring authenticatio
+REGISTRATION_EMAIL_HTML = True
 
 # Storing additional information about users
 AUTH_PROFILE_MODULE = 'core.ShoaliUser'
@@ -214,7 +219,8 @@ EMAIL_HOST_PASSWORD='shoali321'
 EMAIL_USE_TLS=True
 DEFAULT_FROM_EMAIL = 'non-reply@shoali.org'
 
-SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SESSION_COOKIE_AGE = 3600
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 
 # Celery config
 import djcelery
