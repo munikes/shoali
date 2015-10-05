@@ -36,35 +36,25 @@ from main.apps.core.models import ShoaliUser
 
 
 class CustomRegistrationView(RegistrationView):
-    def register(self, request, **cleaned_data):
-        username, email, password = cleaned_data['username'], cleaned_data['email'], cleaned_data['password1']
+
+    def register(self, request, form):
+        username = form.cleaned_data.get('username')
+        email = form.cleaned_data.get('email')
+        password = form.cleaned_data.get('password1')
         if Site._meta.installed:
             site = Site.objects.get_current()
         else:
             site = RequestSite(request)
-        new_user = RegistrationProfile.objects.create_inactive_user(username,
-                email, password, site)
+        new_user = RegistrationProfile.objects.create_inactive_user(site=site,
+                request=request, username=username, email=email, password=password)
         signals.user_registered.send(sender=self.__class__, user=new_user,
                 request=request)
         # Customize the register
         user = User.objects.get(username=username)
-        user.first_name = cleaned_data['first_name']
-        user.last_name = cleaned_data['last_name']
         shoali_user = ShoaliUser(user=user)
-        shoali_user.nick = cleaned_data['username']
-        shoali_user.password = make_password(cleaned_data['password1'])
-        shoali_user.name = cleaned_data['first_name']
-        shoali_user.surname = cleaned_data['last_name']
-        shoali_user.email = cleaned_data['email']
-        shoali_user.avatar = cleaned_data['avatar']
-        shoali_user.country = cleaned_data['country']
-        shoali_user.state = cleaned_data['state']
-        shoali_user.city = cleaned_data['city']
-        shoali_user.description = cleaned_data['description']
-        shoali_user.birthday = cleaned_data['birthday']
-        shoali_user.telephone = cleaned_data['telephone']
-        shoali_user.gpg_key = cleaned_data['gpg_key']
-        shoali_user.gender = cleaned_data['gender']
+        shoali_user.nick = form.cleaned_data.get('username')
+        shoali_user.password = make_password(form.cleaned_data.get('password1'))
+        shoali_user.email = form.cleaned_data.get('email')
         registration = RegistrationProfile.objects.get(user=user)
         shoali_user.registration_profile = registration
         shoali_user.activation_key = registration.activation_key
@@ -96,6 +86,7 @@ class CustomRegistrationView(RegistrationView):
         return ('registration_complete', (), {})
 
 class CustomActivationView(ActivationView):
+
     def activate(self, request, activation_key):
         activated = RegistrationProfile.objects.activate_user(activation_key)
         if activated:

@@ -59,6 +59,12 @@ errors = {
 
 class ShoaliUserForm (ModelForm):
 
+    first_name = forms.CharField(label=_("First Name"), max_length=30,
+            help_text=_(helps['first_name']),
+            error_messages={'invalid': _(errors['invalid_first_name'])})
+    last_name = forms.CharField(label=_("Last Name"), max_length=60,
+            help_text=_(helps['last_name']),
+            error_messages={'invalid': _(errors['invalid_last_name'])})
     birthday = forms.DateField(label=_("Birthday"),
     #        widget=forms.DateInput(format='%d/%m/%Y'),
             input_formats=('%d/%m/%Y',),
@@ -78,7 +84,6 @@ class ShoaliUserForm (ModelForm):
             error_messages={
                 'invalid': _(errors['invalid_gpg_key'])},
             required=False)
-    captcha = ReCaptchaField(attrs={'theme' : 'clean'})
 
     class Meta:
         model = ShoaliUser
@@ -102,35 +107,11 @@ class CustomRegistrationForm (RegistrationForm):
     """
     Form to register User
     """
-    first_name = forms.CharField(label=_("First Name"), max_length=30,
-            help_text=_(helps['first_name']),
-            error_messages={'invalid': _(errors['invalid_first_name'])})
-    last_name = forms.CharField(label=_("Last Name"), max_length=60,
-            help_text=_(helps['last_name']),
-            error_messages={'invalid': _(errors['invalid_last_name'])})
+    captcha = ReCaptchaField(attrs={'theme' : 'clean'})
 
     def __init__(self, *args, **kw):
         super(RegistrationForm, self).__init__(*args, **kw)
-        self.fields.keyOrder = ['username', 'password1', 'password2',
-                'first_name','last_name', 'gender', 'birthday', 'email',
-                'telephone', 'city', 'state', 'country', 'gpg_key',
-                'description', 'avatar', 'captcha']
-
-    def clean_gpg_key(self):
-        """
-        Check if GPG KeyID if is null or duplicate
-        """
-        gpg_key = self.cleaned_data.get('gpg_key')
-        if gpg_key == '':
-            gpg_key = None
-        else:
-            try:
-                ShoaliUser.objects.get(gpg_key=gpg_key)
-            except ShoaliUser.DoesNotExist:
-                return gpg_key
-            raise forms.ValidationError(errors['duplicate_gpgkey'])
-        return gpg_key
-
+        self.fields.keyOrder = ['username', 'password1', 'password2','captcha']
 
 class BitcoinAddressForm (ModelForm):
 
@@ -139,6 +120,7 @@ class BitcoinAddressForm (ModelForm):
 
     class Meta:
         model = BitcoinAddress
+        fields = '__all__'
 
     def clean_bitcoin_address(self):
         """
@@ -181,3 +163,4 @@ class LoanForm (ModelForm):
 
     class Meta:
         model = Loan
+        fields = '__all__'
