@@ -71,8 +71,8 @@ class ShoaliUser (models.Model):
     gender = models.CharField (max_length=6, choices=GENDER,
             verbose_name='Gender', blank=True)
     is_active = models.BooleanField (default=False)
-    subscribe = models.DateTimeField (auto_now_add=True, default=timezone.now)
-    unsubscribe = models.DateTimeField (auto_now=True, default=timezone.now)
+    subscribe = models.DateTimeField (auto_now_add=True)
+    unsubscribe = models.DateTimeField (auto_now_add=True)
     is_unsubscribe = models.BooleanField (default=False)
     is_verified = models.BooleanField(default=False)
     # apostille convention
@@ -117,14 +117,14 @@ class Loan (models.Model):
     interest = models.DecimalField(verbose_name='Interest', max_digits=6,
             decimal_places=3,
             help_text='Indicate amount the interest of supply as %.')
-    unit = models.DecimalField(max_length=1, choices=UNIT_CHOICES,
+    unit = models.DecimalField(choices=UNIT_CHOICES,
             max_digits=15, verbose_name='Unit', decimal_places=8)
     description = models.TextField (verbose_name='Description',
             help_text='Describe your main motivations.',
             blank=True)
     period = models.PositiveIntegerField(verbose_name='Period',
             help_text='Indicate repayment period.')
-    days = models.PositiveIntegerField(max_length=1,choices=DAYS_CHOICES, verbose_name='Days')
+    days = models.PositiveIntegerField(choices=DAYS_CHOICES, verbose_name='Days')
 
     def _get_total_amount(self):
         return (self.amount * self.unit) * self.interest/Decimal('100') + (self.amount * self.unit)
