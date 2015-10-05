@@ -12,15 +12,16 @@
     {% csrf_token %}
     {% bootstrap_field form.username show_label=false %}
     {% bootstrap_field form.password show_label=false %}
-    <div class="checkbox pull-left">
+    <div class="checkbox">
         <label>
-            <input type="checkbox" name="remember_me">
+            <input type="checkbox" name="remember_me" class="pull-left">
             Remember me
         </label>
+        <a href="{% url 'auth_password_reset' %}" class="pull-right">Forgot the password?</a>
     </div>
     {% bootstrap_button button_type=submit content="Sign in" size="lg" button_class="btn-primary btn-block" %}
     <a href="mailto:info@shoali.org?subject=Need help? Sign in" class="pull-right need-help">Need help? </a>
-    <a href="/accounts/register/" class="pull-left new-account">Create an account </a>
+    <a href="{% url 'registration_register' %}" class="pull-left new-account">Create an account </a>
 </form>
 
 {% endblock %}
