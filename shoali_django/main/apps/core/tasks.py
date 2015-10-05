@@ -25,7 +25,7 @@ import logging
 logger = logging.getLogger(__name__)
 from decimal import Decimal
 from celery.task import task
-from pymongo import Connection
+from pymongo import MongoClient
 import bitcoinrpc
 from main.apps.core.utils import get_blocks, update_blocks, sum_balance,\
         get_block
@@ -52,7 +52,7 @@ def get_balance_and_progress_status(bitcoin_address):
         raise Exception ('Connection to bitcoin client failed.')
     # connect to database
     try:
-        con_db = Connection('localhost', 27017)
+        con_db = MongoClient('localhost', 27017)
         logger.debug('database connection: %s', con_db)
     except Exception as e:
         logger.exception(e)
@@ -129,7 +129,7 @@ def get_balance(bitcoin_address):
         raise Exception ('Connection to bitcoin client failed.')
     # connect to database
     try:
-        con_db = Connection('localhost', 27017)
+        con_db = MongoClient('localhost', 27017)
         logger.debug('database connection: %s', con_db)
     except Exception as e:
         logger.exception(e)
