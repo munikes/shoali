@@ -26,7 +26,7 @@ logger = logging.getLogger(__name__)
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.http import HttpResponse
-from django.utils import simplejson as json
+import json
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse_lazy
 from django.views.generic.list import (BaseListView, ListView,
