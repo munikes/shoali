@@ -28,7 +28,7 @@
 
 import re
 from django import forms
-from django.forms.util import ValidationError
+from django.forms.utils import ValidationError
 from django.utils.translation import ugettext_lazy as _
 from Crypto.Hash import SHA256
 
