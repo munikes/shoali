@@ -19,15 +19,19 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from django import get_version
 from django.conf.urls import patterns, include, url
 from django.conf import settings
 from django.views.generic import TemplateView
-from django.contrib.auth.decorators import login_required
+from django.core.urlresolvers import reverse_lazy
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
+from django.contrib.auth import views as auth_views
+from django.contrib.auth.decorators import login_required
 from main.apps.core.backend.views import CustomRegistrationView, CustomActivationView
 from main.apps.core.forms import CustomRegistrationForm
+from distutils.version import LooseVersion
 admin.autodiscover()
 
 from main.apps.core import views
@@ -68,7 +72,35 @@ urlpatterns = patterns('main.apps.core.views',
     url(r'^balance/$','getbalance', name='balance'),
     url(r'^update_task/$', 'update_task', name='update_task'),
 )
+if (LooseVersion(get_version()) >= LooseVersion('1.6')):
+    urlpatterns += patterns('',
+                            url(r'^accounts/password/reset/confirm/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>.+)/$',
+                                auth_views.password_reset_confirm,
+                            {'post_reset_redirect': reverse_lazy('password_reset_complete'),
+                               'template_name': 'registration/reset_password_confirm.html'},
+                                name='password_reset_confirm')
+                        )
+else:
+    urlpatterns += patterns('',
+                            url(r'^accounts/password/reset/confirm/(?P<uidb36>[0-9A-Za-z]{1,13})-(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+                                auth_views.password_reset_confirm,
+                            {'post_reset_redirect': reverse_lazy('password_reset_complete'),
+                               'template_name': 'registration/reset_password_confirm.html'},
+                                name='password_reset_confirm')
+                        )
 urlpatterns += patterns('',
+    url(r'^password/reset/$', auth_views.password_reset,
+        {'post_reset_redirect': reverse_lazy('password_reset_done'),
+        'template_name': 'registration/reset_password_form.html',
+        'email_template_name':'registration/reset_password_email.html',
+        'subject_template_name':'registration/password_reset_subject.txt'},
+        name='password_reset'),
+    url(r'^password/reset/complete/$', auth_views.password_reset_complete,
+        {'template_name': 'registration/reset_password_complete.html'},
+        name='password_reset_complete'),
+    url(r'^password/reset/done/$', auth_views.password_reset_done,
+        {'template_name': 'registration/reset_password_done.html'},
+        name='password_reset_done'),
     # Uncomment the admin/doc line below to enable admin documentation:
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
@@ -79,7 +111,7 @@ urlpatterns += patterns('',
     url(r'^accounts/register/$', CustomRegistrationView.as_view(
         form_class=CustomRegistrationForm),
         name='registration_register'),
-    url(r'^accounts/activate/complete/$', 
+    url(r'^accounts/activate/complete/$',
         TemplateView.as_view(template_name='registration/activation_complete.html'),
         name='registration_activation_complete'),
     # Activation keys get matched by \w+ instead of the more specific
@@ -89,7 +121,6 @@ urlpatterns += patterns('',
     url(r'^accounts/activate/(?P<activation_key>\w+)/$', 
         CustomActivationView.as_view(),
         name='registration_activate'),
-    url(r'^accounts/login/$','remember_me.views.remember_me_login',name = 'remember_me_login'),
     url(r'^accounts/', include('registration.backends.default.urls')),
 )
 
@@ -103,3 +134,4 @@ if settings.DEBUG:
             'document_root': settings.STATIC_ROOT,
         }),
     )
+

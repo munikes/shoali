@@ -17,7 +17,7 @@
             <input type="checkbox" name="remember_me" class="pull-left">
             Remember me
         </label>
-        <a href="{% url 'auth_password_reset' %}" class="pull-right">Forgot the password?</a>
+        <a href="{% url 'password_reset' %}" class="pull-right">Forgot the password?</a>
     </div>
     {% bootstrap_button button_type=submit content="Sign in" size="lg" button_class="btn-primary btn-block" %}
     <a href="mailto:info@shoali.org?subject=Need help? Sign in" class="pull-right need-help">Need help? </a>
