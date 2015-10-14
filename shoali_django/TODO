@@ -47,3 +47,4 @@ Some of the planned features include:
 -̶ ̶D̶o̶ ̶a̶ ̶c̶a̶c̶h̶e̶ ̶f̶o̶r̶ ̶t̶h̶e̶ ̶n̶u̶m̶b̶e̶r̶ ̶o̶f̶ ̶r̶e̶s̶c̶a̶n̶ ̶t̶r̶a̶n̶s̶a̶c̶t̶i̶o̶n̶s̶ ̶(̶f̶i̶n̶a̶l̶l̶y̶ ̶i̶t̶s̶ ̶a̶ ̶b̶a̶c̶k̶g̶r̶o̶u̶n̶d̶ ̶t̶a̶s̶k̶)̶
 - Init daemon, see fabfile (run server and run celery)
 -̶ ̶P̶u̶t̶ ̶d̶o̶c̶u̶m̶e̶n̶t̶a̶t̶i̶o̶n̶ ̶i̶n̶ ̶m̶a̶r̶k̶d̶o̶w̶n̶ ̶f̶o̶r̶m̶a̶t̶
+- When you update the passwd, it not change in shoaliuser table
